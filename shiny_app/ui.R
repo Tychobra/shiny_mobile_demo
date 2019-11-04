@@ -41,15 +41,38 @@ body <- dashboardBody(
       tabName = "dashboard",
       fluidRow(
         column(
-          width = 12,
+          width = 6,
           verbatimTextOutput("basis_point_dif")
         ),
         column(
+          width = 6,
+          strong("Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
+                 and the Shiller PE as a predictor of future S&P 500 total return.  
+                 It assumes future earnings growth will be consistent with historical averages,
+                 and that earnings growth is a strong predictor of free cash flow (FCF) growth.
+                 The metric uses the U.S. ten year treasury yield as discount rate for these predicted future FCF"
+          )
+        ),
+        column(
           width = 12,
-          h1("Weight of Forward P/E"),
-          ),
-          column(width = 12, 
-                 sliderInput("fwd_pe_weight", label = "Forward P/E Weight", min = 0, max = 1, value = .5, step = .05))
+          h1("Weight of P/E"),
+        ),
+        column(
+          width = 12, 
+          sliderInput(
+            "fwd_pe_pct_weight",
+            label = "Forward P/E Weight",
+            min = 0, 
+            max = 100,
+            value = 20, 
+            step = 5,
+            post = "%"
+          )
+        ),
+        box(
+          width = 12,
+          highchartOutput("historical_chart")
+        )
       )
     ),
     tabItem(
@@ -74,6 +97,8 @@ body <- dashboardBody(
     )
   )
 )
+
+
 dashboardPage(
   header,
   sidebar,
