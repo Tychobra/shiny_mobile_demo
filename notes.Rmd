@@ -1,0 +1,20 @@
+---
+title: "Notes for my First Shiny App"
+author: 'Nick'
+date: '2019-11-05'
+---
+
+### Step 1: Gathering Data
+
+Create scripts to read in data in the "data_prep/" directory...
+
+```{r, eval = FALSE}
+EGR_data$earning_growth
+
+EGR_prod <- prod((EGR_data$earning_growth+1))
+EGR_prod
+```
+
+### Step 2: Save data to "shiny_app/data/"
+
+...
