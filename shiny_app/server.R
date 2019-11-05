@@ -1,16 +1,16 @@
 function(input, output, session) {
   
   sel_pe_weight <- reactive({
-    pe_weight_input <- input$pe_pct_weight / 100
+    input$pe_pct_weight / 100
   })
   
   complete_metric <- reactive({
-    pe_weight_input <- sel_pe_weight()
+    hold_pe_weight <- sel_pe_weight()
       
     metrics %>%
       mutate(
-        pe_component = (1 / pe) * pe_weight_input, 
-        shiller_component = (1 / shiller) * (1 - pe_weight_input),
+        pe_component = (1 / pe) * hold_pe_weight, 
+        shiller_component = (1 / shiller) * (1 - hold_pe_weight),
         nick_metric = (sqrt(egr_geo_mean) * ( shiller_component + pe_component )) * ( egr_geo_mean / t_ten_geo_mean )
       )
   })
@@ -24,7 +24,6 @@ function(input, output, session) {
   
   historical_chart_prep <- reactive({
     hold <- complete_metric()
-    
     xts::xts(x = hold$nick_metric, order.by = hold$date)
   })
   
@@ -73,18 +72,20 @@ function(input, output, session) {
     )
   })
   
+# ##Display S&P price check box
+  
+  
+  
   output$historical_chart <- renderHighchart({
     plot_data <- historical_chart_prep()
     hold_avg <- avg_complete_metric()
+    include_s_p <- input$turn_on_sp_overlay
     
-    highchart(type = "stock") %>%
+    hc_out <- highchart(type = "stock") %>%
       hc_title(text = "Nick metric(blue line) being higher than the average(red line) suggests S&P was cheap") %>%
       hc_legend(
         enabled = FALSE
       ) %>%
-      #hc_rangeSelector(
-      #  selected = 4
-      #) %>%
       hc_xAxis(
         type = 'datetime'
       ) %>%
@@ -104,13 +105,18 @@ function(input, output, session) {
       hc_add_series(
         data = plot_data,
         name = "Nick's Metric"
-      ) 
+       )
+    
+    if (isTRUE(include_s_p)) {
+      hc_out <- hc_out %>%
+        hc_add_series(
+          data = sp_time_series,
+          name = "S&P price"
+        )
+    }
+    
+    hc_out
   })
-
-  # output$basis_point_dif <- renderText({
-  #  complete_avg_metric() %>% 
-  #     pull()
-  # })
   
   output$details_table <- renderDT({
     render_out <- complete_metric()

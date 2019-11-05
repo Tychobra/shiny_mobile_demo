@@ -47,7 +47,7 @@ body <- dashboardBody(
           br()
         ),
         column(
-          width = 6, 
+          width = 5, 
           sliderInput(
             "pe_pct_weight",
             label = "P/E Weight",
@@ -60,18 +60,19 @@ body <- dashboardBody(
           )
         ),
         column(
-          width = 3,
-          valueBoxOutput(
-            "current_complete_metric_box",
-            width = 12
+          width = 1,
+          checkboxInput(
+            "turn_on_sp_overlay",
+            label = strong("show S&P"),
           )
         ),
-        column(
-          width = 3,
-          valueBoxOutput(
-            "avg_complete_metric_box",
-            width = 12
-          )
+        valueBoxOutput(
+          "current_complete_metric_box",
+          width = 3
+        ),
+        valueBoxOutput(
+          "avg_complete_metric_box",
+          width = 3
         ),
         box(
           width = 12,

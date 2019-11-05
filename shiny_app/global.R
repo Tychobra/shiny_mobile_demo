@@ -30,6 +30,6 @@ t_ten_geo_mean <- metrics %>%
   pull("yield_plus_one") %>%
   geo_mean()
 
-
+sp_time_series <- xts::xts(x = metrics$s_p_price / 40000, order.by = metrics$date)
 
 
