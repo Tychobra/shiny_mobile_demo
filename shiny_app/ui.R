@@ -41,38 +41,52 @@ body <- dashboardBody(
       tabName = "dashboard",
       fluidRow(
         column(
-          width = 6,
-          verbatimTextOutput("basis_point_dif")
-        ),
-        column(
-          width = 6,
-          strong("Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
-                 and the Shiller PE as a predictor of future S&P 500 total return.  
-                 It assumes future earnings growth will be consistent with historical averages,
-                 and that earnings growth is a strong predictor of free cash flow (FCF) growth.
-                 The metric uses the U.S. ten year treasury yield as discount rate for these predicted future FCF"
-          )
-        ),
-        column(
           width = 12,
-          h1("Weight of P/E"),
+          h1("Nick Metric: Predicts future returns in excess of 10 year T-bill yield"),
+          br(),
+          br()
         ),
         column(
-          width = 12, 
+          width = 6, 
           sliderInput(
-            "fwd_pe_pct_weight",
-            label = "Forward P/E Weight",
+            "pe_pct_weight",
+            label = "P/E Weight",
             min = 0, 
             max = 100,
             value = 20, 
             step = 5,
-            post = "%"
+            post = "%",
+            width = "100%"
+          )
+        ),
+        column(
+          width = 3,
+          valueBoxOutput(
+            "current_complete_metric_box",
+            width = 12
+          )
+        ),
+        column(
+          width = 3,
+          valueBoxOutput(
+            "avg_complete_metric_box",
+            width = 12
           )
         ),
         box(
           width = 12,
           highchartOutput("historical_chart")
-        )
+        ),
+        column(
+          width = 6,
+          strong("*Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
+                 and the Shiller PE as a predictor of future S&P 500 total return.  
+                 It assumes future earnings growth will be consistent with historical averages,
+                 and that earnings growth is a strong predictor of free cash flow (FCF) growth.
+                 The metric uses the U.S. ten year treasury yield as a discount rate for these predicted future FCF."
+          ),
+          pullright = TRUE
+        ),
       )
     ),
     tabItem(
@@ -81,16 +95,16 @@ body <- dashboardBody(
         box(
           title = "Analysis Detail",
           collapsible = TRUE,
-          width = 12,
+          width = 9,
           fluidRow(
             column(
               3,
-              DTOutput("yields_table")
+              DTOutput("details_table")
             ),
-            column(
-              width = 3,
-              DTOutput("egr_table")
-            )
+            # column(
+            #   width = 3,
+            #   DTOutput("egr_table")
+            # )
           )
         )
       )
