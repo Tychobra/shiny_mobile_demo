@@ -4,6 +4,11 @@ function(input, output, session) {
     input$pe_pct_weight / 100
   })
   
+  
+  # calculates nick metrics for all months using data from "metrics" dataframe
+  #
+  # @return a data frame with x columns:
+  # date, pe, shiller, t-bill 10,s&p price, pe component, shiller component, nick_metric
   complete_metric <- reactive({
     hold_pe_weight <- sel_pe_weight()
       
@@ -111,7 +116,7 @@ function(input, output, session) {
       hc_out <- hc_out %>%
         hc_add_series(
           data = sp_time_series,
-          name = "S&P price"
+          name = "S&P price/40000"
         )
     }
     
