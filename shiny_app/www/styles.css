@@ -1,1 +1,6 @@
 /* custom css
+
+.datatables table {
+  white-space: nowrap;
+  text-wrap: none;
+}

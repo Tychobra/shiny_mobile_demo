@@ -41,12 +41,22 @@ metrics <- metrics %>%
 metrics <- metrics %>%
   filter(!is.na(t_bill_10))
 
+## adding log return column
+
+start_s_p_price <- metrics$s_p_price[nrow(metrics)]
+
+metrics <- metrics %>%
+  mutate(log_returns = log( s_p_price /  start_s_p_price))
+
+
+## name the rows
 names(metrics) <- c(
   "date",
   "shiller",
   "pe",
   "t_bill_10",
-  "s_p_price"
+  "s_p_price",
+  "log_return"
 )
 
 saveRDS(

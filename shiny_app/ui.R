@@ -29,7 +29,7 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tags$head(
-    #tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
+    tags$link(rel = "stylesheet", type = "text/css", href = "styles.css"),
     #tags$script(src = "custom.js"),
     tags$link(
       rel="icon",
@@ -47,26 +47,33 @@ body <- dashboardBody(
           br()
         ),
         column(
-          width = 5, 
+          width = 4, 
           sliderTextInput(
             "pe_pct_weight",
             label = "Weights",
             choices = slider_df$pct_label,
-            # min = 0,
-            # max = 100,
             from_min = 0,
             from_max = 100,
-            # value = 20, 
-            # step = 5,
-            # post = "%",
             width = "100%"
           )
         ),
         column(
-          width = 1,
-          checkboxInput(
-            "turn_on_sp_overlay",
-            label = strong("show S&P"),
+          width = 2,
+          fluidRow(
+            column(
+              12,
+              checkboxInput(
+                "turn_on_sp_overlay",
+                label = strong("show S&P"),
+              )
+            ),
+            column(
+              12,
+              checkboxInput(
+                "turn_on_log_sp_overlay",
+                label = strong("show log S&P"),
+              )
+            )
           )
         ),
         valueBoxOutput(
@@ -102,7 +109,7 @@ body <- dashboardBody(
           width = 9,
           fluidRow(
             column(
-              3,
+              12,
               DTOutput("details_table")
             ),
             # column(

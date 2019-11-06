@@ -47,11 +47,11 @@ function(input, output, session) {
   current_complete_metric <- reactive({
     pe_weight_input <- sel_pe_weight()
     c_p_adjustment <- s_p_latest / s_p_first_day_of_month
-    most_resent_t_bill <-  1 + metrics[1, ]$t_bill_10/100
+    most_recent_t_bill <-  1 + metrics[1, ]$t_bill_10/100
     
     pe_component = ( 1 / (c_p_adjustment * metrics[1, ]$pe ) ) * pe_weight_input
     shiller_component = (1 / ( c_p_adjustment * metrics[1, ]$shiller) ) * (1 - pe_weight_input)
-    nick_metric = (sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / most_resent_t_bill ) 
+    nick_metric = (sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / most_recent_t_bill ) 
   })
   
   complete_metric_box_prep <- reactive({
@@ -89,6 +89,7 @@ function(input, output, session) {
     plot_data <- historical_chart_prep()
     hold_avg <- avg_complete_metric()
     include_s_p <- input$turn_on_sp_overlay
+    include_log_s_p <- input$turn_on_log_sp_overlay
     
     hc_out <- highchart(type = "stock") %>%
       hc_title(text = "Nick metric(blue line) being higher than the average(red line) suggests S&P was cheap") %>%
@@ -120,10 +121,18 @@ function(input, output, session) {
       hc_out <- hc_out %>%
         hc_add_series(
           data = sp_time_series,
-          name = "S&P price/40000"
+          name = "S&P price/40000",
+          color = "green"
         )
     }
-    
+    if(isTRUE(include_log_s_p))  {
+      hc_out <- hc_out %>%
+        hc_add_series(
+        data = sp_log_time_series,
+        name = "log S&P price",
+        color = "orange"
+        )
+    }
     hc_out
   })
   
@@ -135,7 +144,8 @@ function(input, output, session) {
       rownames = FALSE,
       options = list(
         dom = "ft",
-        pageLength = nrow(render_out)
+        pageLength = nrow(render_out),
+        scrollX = TRUE
       )
     ) %>%
     formatRound(

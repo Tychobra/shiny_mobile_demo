@@ -33,7 +33,8 @@ t_ten_geo_mean <- metrics %>%
   pull("yield_plus_one") %>%
   geo_mean()
 
-sp_time_series <- xts::xts(x = metrics$s_p_price / 40000, order.by = metrics$date)
+sp_time_series <- xts::xts( x = metrics$s_p_price / 40000, order.by = metrics$date)
+sp_log_time_series <- xts::xts( x = metrics$log_return / 30, order.by = metrics$date)
 
 slider_df <- tibble(
   pct_label = c(
