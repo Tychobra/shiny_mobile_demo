@@ -1,7 +1,11 @@
 function(input, output, session) {
   
   sel_pe_weight <- reactive({
-    input$pe_pct_weight / 100
+    hold_pct_weight_label <- input$pe_pct_weight
+    
+    slider_df %>%
+      filter(slider_df$pct_label == hold_pct_weight_label) %>%
+      pull('value')
   })
   
   
@@ -21,11 +25,11 @@ function(input, output, session) {
   })
   
   
-  observe({
-    print(list(
-      historical_chart_prep = historical_chart_prep()
-    ))
-  })
+  # observe({
+  #   print(list(
+  #     historical_chart_prep = historical_chart_prep()
+  #   ))
+  # })
   
   historical_chart_prep <- reactive({
     hold <- complete_metric()
@@ -42,17 +46,17 @@ function(input, output, session) {
   
   current_complete_metric <- reactive({
     pe_weight_input <- sel_pe_weight()
-    
+    c_p_adjustment <- s_p_latest / s_p_first_day_of_month
     most_resent_t_bill <- metrics[1, ]$t_bill_10
     
-    pe_component = (1 / metrics[1, "pe"]) * pe_weight_input
-    shiller_component = (1 / metrics[1, "shiller"]) * (1 - pe_weight_input)
+    pe_component = ( 1 / (c_p_adjustment * metrics[1, ]$pe ) ) * pe_weight_input
+    shiller_component = (1 / ( c_p_adjustment * metrics[1, ]$shiller) ) * (1 - pe_weight_input)
     nick_metric = (sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / t_ten_geo_mean) 
   })
   
   complete_metric_box_prep <- reactive({
     (current_complete_metric() * 100) %>%
-      round(2) %>%
+      round(3) %>%
       paste0('%')
   })
   output$current_complete_metric_box <- renderValueBox({
@@ -65,7 +69,7 @@ function(input, output, session) {
   
   avg_complete_metric_box_prep <- reactive({
     (avg_complete_metric()*100) %>%
-    round(2) %>%
+    round(3) %>%
     paste0("%")
   })
   output$avg_complete_metric_box <- renderValueBox({
