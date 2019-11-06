@@ -2,6 +2,7 @@ library(Quandl)
 library(dplyr)
 library(lubridate)
 
+
 shiller_table_month <- Quandl("MULTPL/SHILLER_PE_RATIO_MONTH")
 pe_table_month <- Quandl("MULTPL/SP500_PE_RATIO_MONTH")
 treasury_table_month <- Quandl("USTREASURY/YIELD", collapse="monthly") 
@@ -52,4 +53,3 @@ saveRDS(
   metrics,
   "shiny_app/data/metrics.RDS"
 )
-
