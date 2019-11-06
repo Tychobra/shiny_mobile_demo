@@ -48,14 +48,17 @@ body <- dashboardBody(
         ),
         column(
           width = 5, 
-          sliderInput(
+          sliderTextInput(
             "pe_pct_weight",
-            label = "P/E Weight",
-            min = 0, 
-            max = 100,
-            value = 20, 
-            step = 5,
-            post = "%",
+            label = "Weights",
+            choices = slider_df$pct_label,
+            # min = 0,
+            # max = 100,
+            from_min = 0,
+            from_max = 100,
+            # value = 20, 
+            # step = 5,
+            # post = "%",
             width = "100%"
           )
         ),
