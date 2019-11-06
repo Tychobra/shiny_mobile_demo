@@ -4,6 +4,7 @@ library(DT)
 library(shinydashboard)
 library(tychobratools) # remotes::install_github("tychobra/tychobratools")
 library(shinyWidgets)
+library(lubridate)
 
 tychobratools::hc_global_options()
 
@@ -58,7 +59,6 @@ s_p_first_day_of_month <- s_p_daily %>%
     day == min(day)
   ) %>%
   pull('close')
-
 
 
         

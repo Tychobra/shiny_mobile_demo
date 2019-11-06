@@ -15,7 +15,7 @@ function(input, output, session) {
   # date, pe, shiller, t-bill 10,s&p price, pe component, shiller component, nick_metric
   complete_metric <- reactive({
     hold_pe_weight <- sel_pe_weight()
-      
+  
     metrics %>%
       mutate(
         pe_component = (1 / pe) * hold_pe_weight, 
@@ -47,11 +47,11 @@ function(input, output, session) {
   current_complete_metric <- reactive({
     pe_weight_input <- sel_pe_weight()
     c_p_adjustment <- s_p_latest / s_p_first_day_of_month
-    most_resent_t_bill <- metrics[1, ]$t_bill_10
+    most_resent_t_bill <-  1 + metrics[1, ]$t_bill_10/100
     
     pe_component = ( 1 / (c_p_adjustment * metrics[1, ]$pe ) ) * pe_weight_input
     shiller_component = (1 / ( c_p_adjustment * metrics[1, ]$shiller) ) * (1 - pe_weight_input)
-    nick_metric = (sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / t_ten_geo_mean) 
+    nick_metric = (sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / most_resent_t_bill ) 
   })
   
   complete_metric_box_prep <- reactive({

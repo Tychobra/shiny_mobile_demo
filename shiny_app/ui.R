@@ -82,7 +82,7 @@ body <- dashboardBody(
           highchartOutput("historical_chart")
         ),
         column(
-          width = 6,
+          width = 12,
           strong("*Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
                  and the Shiller PE as a predictor of future S&P 500 total return.  
                  It assumes future earnings growth will be consistent with historical averages,
