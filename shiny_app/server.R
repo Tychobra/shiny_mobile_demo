@@ -13,7 +13,15 @@ function(input, output, session) {
     
     discount_slider_df %>%
       filter(discount_slider_df$discount_rate == hold_t_bill_discount) %>%
-      pull("value2")
+      pull("value_current_discount")
+  })
+  
+  sel_t_bill_discount_geo <- reactive({
+    hold_t_bill_discount <- input$t_bill_discount_used
+    
+    discount_slider_df %>%
+      filter(discount_slider_df$discount_rate == hold_t_bill_discount) %>%
+      pull("value_geo_discount")
   })
   
   # calculates nick metrics for all months using data from "metrics" dataframe
@@ -45,10 +53,11 @@ function(input, output, session) {
   
   avg_complete_metric <- reactive({
     pe_weight_input <- sel_pe_weight()
-    
+    t_duration_geo_selected <- sel_t_bill_discount_geo()
+      
     pe_component = (1 / avg_pe_100) * pe_weight_input 
     shiller_component = (1 / avg_shiller_100) * (1 - pe_weight_input)
-    nick_metric = ( sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / t_ten_geo_mean )
+    nick_metric = ( sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / t_duration_geo_selected )
   })
   
   current_complete_metric <- reactive({

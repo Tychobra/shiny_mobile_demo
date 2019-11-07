@@ -47,15 +47,27 @@ body <- dashboardBody(
           br()
         ),
         column(
-          width = 4, 
-          sliderTextInput(
-            "pe_pct_weight",
-            label = "Weights",
-            choices = slider_df$pct_label,
-            from_min = 0,
-            from_max = 100,
-            width = "100%"
-          )
+          width = 4,
+          fluidRow(
+            column(
+              width = 12, 
+              sliderTextInput(
+              "pe_pct_weight",
+              label = "Weights",
+              choices = slider_df$pct_label,
+              width = "100%"
+              )
+            ),
+          ),
+            column(
+              width = 12,
+              sliderTextInput(
+                "t_bill_discount_used",
+                label = "T-bill to use as discount rate",
+                choices = discount_slider_df$discount_rate,
+                width = "100%"
+              )
+            )
         ),
         column(
           width = 2,

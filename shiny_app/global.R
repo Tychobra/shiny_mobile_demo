@@ -34,22 +34,12 @@ t_ten_geo_mean <- metrics %>%
   geo_mean()
 
 t_bill_geo_means <- metrics %>%
-  select(t_bill_3m:t_bill_30)  %>%
-  mutate(t_3_m_geo = 1 + t_bill_3m/100)  %>%
-  mutate(t_6_m_geo = 1 + t_bill_6m/100) %>%
-  mutate(t_1_y_geo = 1 + t_bill_1/100) %>%
-  mutate(t_2_y_geo = 1 + t_bill_2/100) %>%
-  mutate(t_3_y_geo = 1 + t_bill_3/100) %>%
-  mutate(t_5_y_geo = 1 + t_bill_5/100) %>%
-  mutate(t_7_y_geo = 1 + t_bill_7/100) %>%
-  mutate(t_10_y_geo = 1 + t_bill_10/100) %>%
-  mutate(t_20_y_geo = 1 + t_bill_20/100) %>%
-  mutate(t_30_y_geo = 1 + t_bill_30/100) %>%
-  select(t_3_m_geo:t_30_y_geo) %>%
-  # pull("t_3_m_geo") %>%
-  geo_mean()
+  select(date, t_bill_3m:t_bill_30) %>%
+  tidyr::pivot_longer(t_bill_3m:t_bill_30, names_to = 'duration', values_to = 'value') %>%
+  group_by(duration) %>%
+  summarize(geo_mean = geo_mean(value)) %>%
+  ungroup()
 
-  
 
 sp_time_series <- xts::xts( x = metrics$s_p_price / 40000, order.by = metrics$date)
 sp_log_time_series <- xts::xts( x = metrics$log_return / 30, order.by = metrics$date)
@@ -78,12 +68,9 @@ discount_slider_df <- tibble(
      "7 year","10 year", 
      "20 year", "30 year"
   ),
-  value2 = current_treasury_rates
-  # value2 = c(
-  #   1.54,
-  #   1.57,	1.53,	1.52,
-  #   1.52,	1.51,	1.60,
-  #   1.69,	2.00,	2.17)
+  value_current_discount = current_treasury_rates,
+  value_geo_discount = t_bill_geo_means$geo_mean
+  
 )
 
 s_p_latest <- s_p_daily %>%
