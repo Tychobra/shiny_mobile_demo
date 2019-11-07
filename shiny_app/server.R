@@ -8,6 +8,13 @@ function(input, output, session) {
       pull('value')
   })
   
+  sel_t_bill_discount <- reactive({
+    hold_t_bill_discount <- input$t_bill_discount_used
+    
+    discount_slider_df %>%
+      filter(discount_slider_df$discount_rate == hold_t_bill_discount) %>%
+      pull("value2")
+  })
   
   # calculates nick metrics for all months using data from "metrics" dataframe
   #
@@ -15,7 +22,7 @@ function(input, output, session) {
   # date, pe, shiller, t-bill 10,s&p price, pe component, shiller component, nick_metric
   complete_metric <- reactive({
     hold_pe_weight <- sel_pe_weight()
-  
+    
     metrics %>%
       mutate(
         pe_component = (1 / pe) * hold_pe_weight, 
@@ -47,11 +54,11 @@ function(input, output, session) {
   current_complete_metric <- reactive({
     pe_weight_input <- sel_pe_weight()
     c_p_adjustment <- s_p_latest / s_p_first_day_of_month
-    most_recent_t_bill <-  1 + metrics[1, ]$t_bill_10/100
+    most_recent_t_bill_selected <-  1 + (sel_t_bill_discount() / 100) 
     
     pe_component = ( 1 / (c_p_adjustment * metrics[1, ]$pe ) ) * pe_weight_input
     shiller_component = (1 / ( c_p_adjustment * metrics[1, ]$shiller) ) * (1 - pe_weight_input)
-    nick_metric = (sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / most_recent_t_bill ) 
+    nick_metric = (sqrt(egr_geo_mean)*( shiller_component + pe_component )) * ( egr_geo_mean / most_recent_t_bill_selected ) 
   })
   
   complete_metric_box_prep <- reactive({
