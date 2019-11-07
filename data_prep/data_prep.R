@@ -14,8 +14,9 @@ pe_100_year <- pe_table_month[1:1200, ]
 s_p_100_year <- s_p_table_month[1:1200, ]
 
 treasuries_out <- treasury_table_month %>%
-  select(date = Date, t_bill_10 = `10 YR`) %>%
-  mutate(date = date + lubridate::days(1))
+  # select(date = date, t_bill_10 = `10 YR`) %>%
+  mutate(date = Date + lubridate::days(1))  %>%
+  select(-Date)
 
 s_p_out <- s_p_table_month %>%
   select(date = Year, s_p_price = "S&P Composite") %>%
@@ -39,14 +40,16 @@ metrics <- metrics %>%
 
 # remove all data before the first t-bill data
 metrics <- metrics %>%
-  filter(!is.na(t_bill_10))
+  filter(!is.na(`10 YR`))
 
 ## adding log return column
 
 start_s_p_price <- metrics$s_p_price[nrow(metrics)]
 
 metrics <- metrics %>%
-  mutate(log_returns = log( s_p_price /  start_s_p_price))
+  mutate(log_returns = log( s_p_price /  start_s_p_price)) %>%
+  select(-`1 MO`) %>%
+  select(-`2 MO`)
 
 
 ## name the rows
@@ -54,7 +57,16 @@ names(metrics) <- c(
   "date",
   "shiller",
   "pe",
+  "t_bill_3m",
+  "t_bill_6m",
+  "t_bill_1",
+  "t_bill_2",
+  "t_bill_3",
+  "t_bill_5",
+  "t_bill_7",
   "t_bill_10",
+  "t_bill_20",
+  "t_bill_30",
   "s_p_price",
   "log_return"
 )
@@ -63,3 +75,4 @@ saveRDS(
   metrics,
   "shiny_app/data/metrics.RDS"
 )
+
