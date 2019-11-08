@@ -65,7 +65,8 @@ body <- dashboardBody(
                 "t_bill_discount_used",
                 label = "T-bill to use as discount rate",
                 choices = discount_slider_df$discount_rate,
-                width = "100%"
+                width = "100%",
+                selected = "10 year"
               )
             )
         ),
@@ -106,7 +107,7 @@ body <- dashboardBody(
                  and the Shiller PE as a predictor of future S&P 500 total return.  
                  It assumes future earnings growth will be consistent with historical averages,
                  and that earnings growth is a strong predictor of free cash flow (FCF) growth.
-                 The metric uses the U.S. ten year treasury yield as a discount rate for these predicted future FCF."
+                 The metric uses the U.S. your choice of treasury yield by duration as a discount rate for these predicted future FCF."
           ),
           pullright = TRUE
         ),

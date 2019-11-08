@@ -30,12 +30,13 @@ function(input, output, session) {
   # date, pe, shiller, t-bill 10,s&p price, pe component, shiller component, nick_metric
   complete_metric <- reactive({
     hold_pe_weight <- sel_pe_weight()
+    t_duration_geo_selected <- sel_t_bill_discount_geo()
     
     metrics %>%
       mutate(
         pe_component = (1 / pe) * hold_pe_weight, 
         shiller_component = (1 / shiller) * (1 - hold_pe_weight),
-        nick_metric = (sqrt(egr_geo_mean) * ( shiller_component + pe_component )) * ( egr_geo_mean / t_ten_geo_mean )
+        nick_metric = (sqrt(egr_geo_mean) * ( shiller_component + pe_component )) * ( egr_geo_mean / t_duration_geo_selected )
       )
   })
   
