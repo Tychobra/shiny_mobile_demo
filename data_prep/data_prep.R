@@ -1,6 +1,7 @@
 library(Quandl)
 library(dplyr)
 library(lubridate)
+library(tidyverse)
 
 
 shiller_table_month <- Quandl("MULTPL/SHILLER_PE_RATIO_MONTH")

@@ -89,6 +89,10 @@ body <- dashboardBody(
               "turn_on_log_sp_overlay",
               label = strong("show log S&P"),
               value = TRUE
+            ),
+            checkboxInput(
+              "turn_on_s_p_tr_overlay",
+              label = strong("show S&P TR")
             )
           ),
           width = 12,

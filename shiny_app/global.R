@@ -10,6 +10,9 @@ tychobratools::hc_global_options()
 
 metrics <- readRDS('data/metrics.RDS')
 s_p_daily <- readRDS('data/s_p_daily.RDS')
+t_bill_geo_means <- readRDS('data/t_bill_geo_means.RDS')
+egr_geo_mean <- readRDS('data/egr_geo_mean.RDS')
+s_p_daily_tr <- readRDS('data/s_p_daily_tr.RDS')
 
 egr_data <- read.csv(
   "data/egr_data.csv",
@@ -21,6 +24,7 @@ avg_pe_100 <- mean(metrics$pe)
 
 sp_time_series <- xts::xts( x = metrics$s_p_price / 40000, order.by = metrics$date)
 sp_log_time_series <- xts::xts( x = metrics$log_return / 30, order.by = metrics$date)
+s_p_daily_tr_time_series <- xts( x = s_p_daily_tr$close /80000, order.by = s_p_daily_tr$date)
 
 ##creates df used in pe weight slider
 slider_df <- tibble(
