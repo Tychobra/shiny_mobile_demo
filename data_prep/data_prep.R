@@ -97,3 +97,13 @@ saveRDS(
   "shiny_app/data/t_bill_geo_means.RDS"
 )
 
+egr_geo_mean <- egr_data %>%
+  mutate(growth_rate = 1 + earning_growth) %>%
+  pull("growth_rate") %>%
+  geo_mean()
+
+saveRDS(
+  egr_geo_mean,
+  "shiny_app/data/egr_geo_mean.RDS"
+)
+

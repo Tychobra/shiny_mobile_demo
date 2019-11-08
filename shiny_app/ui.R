@@ -47,7 +47,7 @@ body <- dashboardBody(
           br()
         ),
         column(
-          width = 4,
+          width = 6,
           fluidRow(
             column(
               width = 12, 
@@ -55,10 +55,10 @@ body <- dashboardBody(
               "pe_pct_weight",
               label = "Weights",
               choices = slider_df$pct_label,
-              width = "100%"
+              width = "100%",
+              selected = "20%"
               )
             ),
-          ),
             column(
               width = 12,
               sliderTextInput(
@@ -69,25 +69,7 @@ body <- dashboardBody(
                 selected = "10 year"
               )
             )
-        ),
-        column(
-          width = 2,
-          fluidRow(
-            column(
-              12,
-              checkboxInput(
-                "turn_on_sp_overlay",
-                label = strong("show S&P"),
-              )
-            ),
-            column(
-              12,
-              checkboxInput(
-                "turn_on_log_sp_overlay",
-                label = strong("show log S&P"),
-              )
-            )
-          )
+          ),
         ),
         valueBoxOutput(
           "current_complete_metric_box",
@@ -98,19 +80,31 @@ body <- dashboardBody(
           width = 3
         ),
         box(
+          dropdown(
+            checkboxInput(
+              "turn_on_sp_overlay",
+              label = strong("show S&P")
+            ),
+            checkboxInput(
+              "turn_on_log_sp_overlay",
+              label = strong("show log S&P")
+            )
+          ),
           width = 12,
           highchartOutput("historical_chart")
         ),
         column(
           width = 12,
-          strong("*Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
+          strong("Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
                  and the Shiller PE as a predictor of future S&P 500 total return.  
                  It assumes future earnings growth will be consistent with historical averages,
                  and that earnings growth is a strong predictor of free cash flow (FCF) growth.
-                 The metric uses the U.S. your choice of treasury yield by duration as a discount rate for these predicted future FCF."
+                 The metric uses the your choice of treasury yield duration as a discount rate for these predicted future FCF."
           ),
-          pullright = TRUE
-        ),
+          br(),
+          br(),
+          strong("*Recommended settings: weight 20%, 10 year discount, and show log S&P")
+        )
       )
     ),
     tabItem(

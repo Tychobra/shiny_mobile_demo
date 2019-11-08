@@ -40,13 +40,6 @@ function(input, output, session) {
       )
   })
   
-  
-  # observe({
-  #   print(list(
-  #     historical_chart_prep = historical_chart_prep()
-  #   ))
-  # })
-  
   historical_chart_prep <- reactive({
     hold <- complete_metric()
     xts::xts(x = hold$nick_metric, order.by = hold$date)
