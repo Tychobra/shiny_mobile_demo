@@ -87,7 +87,8 @@ body <- dashboardBody(
             ),
             checkboxInput(
               "turn_on_log_sp_overlay",
-              label = strong("show log S&P")
+              label = strong("show log S&P"),
+              value = TRUE
             )
           ),
           width = 12,
