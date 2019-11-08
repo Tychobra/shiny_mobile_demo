@@ -75,4 +75,25 @@ saveRDS(
   metrics,
   "shiny_app/data/metrics.RDS"
 )
+##create geo mean func
+geo_mean = function(x, na_rm = TRUE){
+  exp(sum(log(x[x > 0]), na.rm = na_rm) / length(x))
+}
+
+# convert the t bills columns into a long tidy data frame
+t_bill_geo_means <- metrics %>%
+  select(date, t_bill_3m:t_bill_30) %>%
+  tidyr::pivot_longer(t_bill_3m:t_bill_30, names_to = 'duration', values_to = 'value')
+
+# convert to rates and calculate geometric means
+t_bill_geo_means <- t_bill_geo_means %>%
+  mutate(value = 1 + value / 100) %>%
+  group_by(duration) %>%
+  summarize(geo_mean = geo_mean(value)) %>%
+  ungroup()
+
+saveRDS(
+  t_bill_geo_means,
+  "shiny_app/data/t_bill_geo_means.RDS"
+)
 

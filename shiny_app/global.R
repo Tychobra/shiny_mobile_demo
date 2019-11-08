@@ -33,12 +33,17 @@ t_ten_geo_mean <- metrics %>%
   pull("yield_plus_one") %>%
   geo_mean()
 
-t_bill_geo_means <- metrics %>%
-  select(date, t_bill_3m:t_bill_30) %>%
-  tidyr::pivot_longer(t_bill_3m:t_bill_30, names_to = 'duration', values_to = 'value') %>%
-  group_by(duration) %>%
-  summarize(geo_mean = geo_mean(value)) %>%
-  ungroup()
+# # convert the t bills columns into a long tidy data frame
+# t_bill_geo_means <- metrics %>%
+#   select(date, t_bill_3m:t_bill_30) %>%
+#   tidyr::pivot_longer(t_bill_3m:t_bill_30, names_to = 'duration', values_to = 'value')
+# 
+# # convert to rates and calculate geometric means
+# t_bill_geo_means <- t_bill_geo_means %>%
+#   mutate(value = 1 + value / 100) %>%
+#   group_by(duration) %>%
+#   summarize(geo_mean = geo_mean(value)) %>%
+#   ungroup()
 
 
 sp_time_series <- xts::xts( x = metrics$s_p_price / 40000, order.by = metrics$date)
