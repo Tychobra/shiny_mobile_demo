@@ -77,6 +77,15 @@ function(input, output, session) {
     )
   })
   
+  output$buy_sell_rec_box <- renderValueBox({
+    valueBox(
+      value = buy_sell_rec(),
+      subtitle = "Recommendation",
+      width = 12,
+      color = "black"
+    )
+  })
+  
   avg_complete_metric_box_prep <- reactive({
     (avg_complete_metric()*100) %>%
     round(3) %>%
@@ -92,9 +101,6 @@ function(input, output, session) {
   })
   
 # ##Display S&P price check box
-  
-  
-  
   output$historical_chart <- renderHighchart({
     plot_data <- historical_chart_prep()
     hold_avg <- avg_complete_metric()
@@ -115,6 +121,7 @@ function(input, output, session) {
       ) %>%
       hc_yAxis(
         title = list(text = "Nick's Metric"),
+        min = 0,
         plotLines = list(
           list(
             color = '#FF0000',
@@ -172,4 +179,35 @@ function(input, output, session) {
       digits = 4
     )
   })
+  
+  buy_sell_rec <- reactive({
+    metric_vs_avg_dif <- current_complete_metric() - avg_complete_metric()
+
+    cut(metric_vs_avg_dif, c(-Inf, -0.005, 0, Inf),
+        right = FALSE,
+        labels = c("sell", "hold", "buy")
+    )
+  })
+
+  observe({
+    print(list(
+      'buy_sell_rec' = buy_sell_rec()
+    ))
+  })
+
 }
+
+# buy_sell_rec <- reactive({
+#   if(
+#     current_complete_metric() < avg_complete_metric() - 0.3)
+#     message("sell")
+#   else if(
+#     current_complete_metric() < avg_complete_metric())
+#     message("hold")
+#   else(
+#     message("buy"))
+# }
+# )
+
+
+

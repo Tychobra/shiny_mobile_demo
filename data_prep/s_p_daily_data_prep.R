@@ -41,7 +41,8 @@ s_p_daily_tr <- s_p_daily_tr %>%
   select(
     date,
     close = SP500TR.Close
-  ) %>%
+  ) 
+
   # filter(date > as.Date(Sys.Date() - (20*365)) )
 
 saveRDS(

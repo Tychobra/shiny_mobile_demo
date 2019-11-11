@@ -22,9 +22,9 @@ egr_data <- read.csv(
 avg_shiller_100 <- mean(metrics$shiller)
 avg_pe_100 <- mean(metrics$pe)
 
-sp_time_series <- xts::xts( x = metrics$s_p_price / 40000, order.by = metrics$date)
-sp_log_time_series <- xts::xts( x = metrics$log_return / 30, order.by = metrics$date)
-s_p_daily_tr_time_series <- xts( x = s_p_daily_tr$close /80000, order.by = s_p_daily_tr$date)
+sp_time_series <- xts::xts( x = metrics$s_p_price / 50000, order.by = metrics$date)
+sp_log_time_series <- xts::xts( x = metrics$log_return / 35, order.by = metrics$date)
+s_p_daily_tr_time_series <- xts::xts( x = s_p_daily_tr$close /100000, order.by = s_p_daily_tr$date)
 
 ##creates df used in pe weight slider
 slider_df <- tibble(
@@ -73,9 +73,6 @@ s_p_first_day_of_month <- s_p_daily %>%
     day == min(day)
   ) %>%
   pull('close')
-
-        
-
   
 
 

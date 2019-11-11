@@ -42,25 +42,27 @@ body <- dashboardBody(
       fluidRow(
         column(
           width = 12,
-          h1("Nick Metric: Predicts future returns in excess of 10 year T-bill yield"),
-          br(),
+          h2(
+            strong("Nick Metric:"), 
+            "Predicts future returns in excess of 10 year T-bill yield"
+          ),
           br()
         ),
-        column(
+        box(
           width = 6,
           fluidRow(
             column(
-              width = 12, 
+              width = 6,
               sliderTextInput(
-              "pe_pct_weight",
-              label = "Weights",
-              choices = slider_df$pct_label,
-              width = "100%",
-              selected = "20%"
+                "pe_pct_weight",
+                label = "Weights",
+                choices = slider_df$pct_label,
+                width = "100%",
+                selected = "20%"
               )
             ),
             column(
-              width = 12,
+              width = 6,
               sliderTextInput(
                 "t_bill_discount_used",
                 label = "T-bill to use as discount rate",
@@ -69,15 +71,19 @@ body <- dashboardBody(
                 selected = "10 year"
               )
             )
-          ),
+          )
         ),
         valueBoxOutput(
           "current_complete_metric_box",
-          width = 3
+          width = 2
         ),
         valueBoxOutput(
           "avg_complete_metric_box",
-          width = 3
+          width = 2
+        ),
+        valueBoxOutput(
+          "buy_sell_rec_box",
+          width = 2
         ),
         box(
           dropdown(
