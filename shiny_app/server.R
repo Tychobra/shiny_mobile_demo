@@ -88,7 +88,7 @@ function(input, output, session) {
   
   avg_complete_metric_box_prep <- reactive({
     (avg_complete_metric()*100) %>%
-    round(3) %>%
+    round(2) %>%
     paste0("%")
   })
   output$avg_complete_metric_box <- renderValueBox({
@@ -183,31 +183,9 @@ function(input, output, session) {
   buy_sell_rec <- reactive({
     metric_vs_avg_dif <- current_complete_metric() - avg_complete_metric()
 
-    cut(metric_vs_avg_dif, c(-Inf, -0.005, 0, Inf),
+    cut(metric_vs_avg_dif, c(-Inf, -0.005, 0, 0.005, Inf),
         right = FALSE,
-        labels = c("sell", "hold", "buy")
+        labels = c("sell", "hold", "buy", "strong buy")
     )
   })
-
-  observe({
-    print(list(
-      'buy_sell_rec' = buy_sell_rec()
-    ))
-  })
-
 }
-
-# buy_sell_rec <- reactive({
-#   if(
-#     current_complete_metric() < avg_complete_metric() - 0.3)
-#     message("sell")
-#   else if(
-#     current_complete_metric() < avg_complete_metric())
-#     message("hold")
-#   else(
-#     message("buy"))
-# }
-# )
-
-
-
