@@ -37,87 +37,8 @@ body <- dashboardBody(
     )
   ),
   tabItems(
-    tabItem(
-      tabName = "dashboard",
-      fluidRow(
-        column(
-          width = 12,
-          h2(
-            strong("Nick Metric:"), 
-            "Predicts future returns in excess of 10 year T-bill yield"
-          ),
-          br()
-        ),
-        box(
-          width = 6,
-          fluidRow(
-            column(
-              width = 6,
-              sliderTextInput(
-                "pe_pct_weight",
-                label = "Weights",
-                choices = slider_df$pct_label,
-                width = "100%",
-                selected = "20%"
-              )
-            ),
-            column(
-              width = 6,
-              sliderTextInput(
-                "t_bill_discount_used",
-                label = "T-bill to use as discount rate",
-                choices = discount_slider_df$discount_rate,
-                width = "100%",
-                selected = "10 year"
-              )
-            )
-          )
-        ),
-        valueBoxOutput(
-          "current_complete_metric_box",
-          width = 2
-        ),
-        valueBoxOutput(
-          "avg_complete_metric_box",
-          width = 2
-        ),
-        valueBoxOutput(
-          "buy_sell_rec_box",
-          width = 2
-        ),
-        box(
-          dropdown(
-            checkboxInput(
-              "turn_on_sp_overlay",
-              label = strong("show S&P")
-            ),
-            checkboxInput(
-              "turn_on_log_sp_overlay",
-              label = strong("show log S&P"),
-              value = TRUE
-            ),
-            checkboxInput(
-              "turn_on_s_p_tr_overlay",
-              label = strong("show S&P TR")
-            )
-          ),
-          width = 12,
-          highchartOutput("historical_chart")
-        ),
-        column(
-          width = 12,
-          strong("Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
-                 and the Shiller PE as a predictor of future S&P 500 total return.  
-                 It assumes future earnings growth will be consistent with historical averages,
-                 and that earnings growth is a strong predictor of free cash flow (FCF) growth.
-                 The metric uses the your choice of treasury yield duration as a discount rate for these predicted future FCF."
-          ),
-          br(),
-          br(),
-          strong("*Recommended settings: weight 20%, 10 year discount, and show log S&P")
-        )
-      )
-    ),
+    source('ui/1_ui_dashboard.R', local = TRUE)$value,
+    
     source('ui/2_ui_details_of_analysis.R', local = TRUE)$value
   )
 )
