@@ -162,30 +162,18 @@ function(input, output, session) {
     hc_out
   })
   
-  output$details_table <- renderDT({
-    render_out <- complete_metric()
-    
-    datatable(
-      render_out,
-      rownames = FALSE,
-      options = list(
-        dom = "ft",
-        pageLength = nrow(render_out),
-        scrollX = TRUE
-      )
-    ) %>%
-    formatRound(
-      columns = c("pe_component", "shiller_component", "nick_metric"),
-      digits = 4
-    )
-  })
+  
   
   buy_sell_rec <- reactive({
     metric_vs_avg_dif <- current_complete_metric() - avg_complete_metric()
 
-    cut(metric_vs_avg_dif, c(-Inf, -0.005, 0, 0.005, Inf),
+    cut(metric_vs_avg_dif, c(-Inf, -.01, -0.005, 0, 0.01, Inf),
         right = FALSE,
-        labels = c("sell", "hold", "buy", "strong buy")
+        labels = c("stong sell", "sell", "hold", "buy", "strong buy")
     )
   })
+  
+  
+  source('server/2_s_details_of_analysis.R', local = TRUE)
+  
 }
