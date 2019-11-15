@@ -10,57 +10,37 @@ tabItem(
       ),
       br()
     ),
-    box(
-      width = 6,
-      fluidRow(
-        column(
-          width = 6,
-          sliderTextInput(
-            "pe_pct_weight",
-            label = "Weights",
-            choices = slider_df$pct_label,
-            width = "100%",
-            selected = "20%"
-          )
-        ),
-        column(
-          width = 6,
-          sliderTextInput(
-            "t_bill_discount_used",
-            label = "T-bill to use as discount rate",
-            choices = discount_slider_df$discount_rate,
-            width = "100%",
-            selected = "10 year"
-          )
-        )
-      )
-    ),
     valueBoxOutput(
       "current_complete_metric_box",
-      width = 2
+      width = 4
     ),
     valueBoxOutput(
       "avg_complete_metric_box",
-      width = 2
+      width = 4
     ),
     valueBoxOutput(
       "buy_sell_rec_box",
-      width = 2
+      width = 4
     ),
     box(
       dropdown(
+        headerText = "* shows relative performance of log returns and returns, respectively",
         checkboxInput(
           "turn_on_sp_overlay",
-          label = strong("show S&P")
+          label = strong("S&P")
         ),
         checkboxInput(
           "turn_on_log_sp_overlay",
-          label = strong("show log S&P"),
-          value = TRUE
+          label = strong("log S&P")
         ),
         checkboxInput(
           "turn_on_s_p_tr_overlay",
-          label = strong("show S&P TR")
+          label = strong("S&P TR")
+        ),
+        checkboxInput(
+          "turn_on_s_p_tr_log_overlay",
+          label = strong("log S&P TR"),
+          value = TRUE
         )
       ),
       width = 12,
@@ -68,6 +48,9 @@ tabItem(
     ),
     column(
       width = 12,
+      strong("*S&P overlays above show relative performance of logrithmic S&P and S&P, respectively"),
+      br(),
+      br(),
       strong("Nick's metric uses a weighted combination of Price to Earnings ratio (PE),
                    and the Shiller PE as a predictor of future S&P 500 total return.  
                    It assumes future earnings growth will be consistent with historical averages,
@@ -76,7 +59,7 @@ tabItem(
       ),
       br(),
       br(),
-      strong("*Recommended settings: weight 20%, 10 year discount, and show log S&P")
+      strong("*Recommended settings: weight 20%, 10 year discount, and show log S&P TR")
     )
   )
 )

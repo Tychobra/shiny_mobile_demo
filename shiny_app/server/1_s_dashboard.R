@@ -77,6 +77,7 @@ output$historical_chart <- renderHighchart({
   include_s_p <- input$turn_on_sp_overlay
   include_log_s_p <- input$turn_on_log_sp_overlay
   include_s_p_tr <- input$turn_on_s_p_tr_overlay
+  include_s_p_tr_log <- input$turn_on_s_p_tr_log_overlay
   
   hc_out <- highchart(type = "stock") %>%
     hc_title(text = "Nick metric(blue line) being higher than the average(red line) suggests S&P was cheap") %>%
@@ -109,7 +110,7 @@ output$historical_chart <- renderHighchart({
     hc_out <- hc_out %>%
       hc_add_series(
         data = sp_time_series,
-        name = "S&P price/40000",
+        name = "S&P price",
         color = "green"
       )
   }
@@ -127,6 +128,14 @@ output$historical_chart <- renderHighchart({
         data = s_p_daily_tr_time_series,
         name = "S&P TR",
         color = "purple"
+      )
+  }
+  if (isTRUE(include_s_p_tr_log)) {
+    hc_out <- hc_out %>%
+      hc_add_series(
+        data = s_p_log_time_series_tr,
+        name = "S&P TR log",
+        color = "brown"
       )
   }
   hc_out

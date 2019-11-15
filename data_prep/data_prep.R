@@ -45,6 +45,7 @@ metrics <- metrics %>%
 
 ## adding log return column
 
+
 start_s_p_price <- metrics$s_p_price[nrow(metrics)]
 
 metrics <- metrics %>%

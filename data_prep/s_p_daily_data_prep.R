@@ -1,5 +1,6 @@
 library(quantmod)
 library(tibble)
+library(rio)
 
 s_p_daily <- quantmod::getSymbols(
   "^GSPC", src = "yahoo",
@@ -26,26 +27,28 @@ saveRDS(
 
 
 ##Fetching S&P total return values
-s_p_daily_tr <- quantmod::getSymbols(
-  "^SP500TR", src = "yahoo",
-  auto.assign = FALSE
-)
+s_p_daily_tr <- import('data_prep/provided/^SP500TR (2).csv')
 
-s_p_daily_tr <- as.data.frame(s_p_daily_tr)
+s_p_daily_tr <- as_tibble(s_p_daily_tr)
 
-s_p_daily_tr$date <- rownames(s_p_daily_tr)
-
-s_p_daily_tr$date <- as.Date(s_p_daily_tr$date)
-
-s_p_daily_tr <- s_p_daily_tr %>%
-  select(
-    date,
-    close = SP500TR.Close
-  ) 
-
-  # filter(date > as.Date(Sys.Date() - (20*365)) )
-
+s_p_daily_tr$Date <- as.Date(s_p_daily_tr$Date)
+  
 saveRDS(
   s_p_daily_tr,
   "shiny_app/data/s_p_daily_tr.RDS"
 )
+
+##Converting for use in log TR
+start_s_p_tr_price <- s_p_daily_tr[1, ]$Close
+
+s_p_daily_tr_log <- s_p_daily_tr %>%
+  mutate(log_returns = log( s_p_daily_tr$Close /  start_s_p_tr_price))
+
+saveRDS(
+  s_p_daily_tr_log,
+  "shiny_app/data/s_p_daily_tr_log.RDS"
+)
+
+
+
+

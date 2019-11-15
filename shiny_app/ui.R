@@ -14,6 +14,25 @@ sidebar <- dashboardSidebar(
       tabName = "details_of_analysis",
       icon = icon("balance-scale")
     ),
+    menuItem(
+      "Strategy Back-test",
+      tabName = "strategy_back_test",
+      icon = icon("balance-scale")
+    ),
+    sliderTextInput(
+      "pe_pct_weight",
+      label = "Weights",
+      choices = slider_df$pct_label,
+      width = "100%",
+      selected = "20%"
+    ),
+    sliderTextInput(
+      "t_bill_discount_used",
+      label = "T-bill to use as discount rate",
+      choices = discount_slider_df$discount_rate,
+      width = "100%",
+      selected = "10 year"
+    ),
     tags$div(
       style = "position: absolute; bottom: 0;",
       a(
@@ -39,7 +58,10 @@ body <- dashboardBody(
   tabItems(
     source('ui/1_ui_dashboard.R', local = TRUE)$value,
     
-    source('ui/2_ui_details_of_analysis.R', local = TRUE)$value
+    source('ui/2_ui_details_of_analysis.R', local = TRUE)$value,
+    
+    source('ui/3_ui_strategy_back_test.R', local = TRUE)$value
+    
   )
 )
 

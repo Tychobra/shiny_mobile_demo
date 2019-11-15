@@ -13,8 +13,9 @@ s_p_daily <- readRDS('data/s_p_daily.RDS')
 t_bill_geo_means <- readRDS('data/t_bill_geo_means.RDS')
 egr_geo_mean <- readRDS('data/egr_geo_mean.RDS')
 s_p_daily_tr <- readRDS('data/s_p_daily_tr.RDS')
+s_p_daily_tr_log <- readRDS('data/s_p_daily_tr_log.RDS')
 
-egr_data <- read.csv(
+seegr_data <- read.csv(
   "data/egr_data.csv",
   stringsAsFactors = FALSE
 )
@@ -22,9 +23,10 @@ egr_data <- read.csv(
 avg_shiller_100 <- mean(metrics$shiller)
 avg_pe_100 <- mean(metrics$pe)
 
-sp_time_series <- xts::xts( x = metrics$s_p_price / 50000, order.by = metrics$date)
-sp_log_time_series <- xts::xts( x = metrics$log_return / 35, order.by = metrics$date)
-s_p_daily_tr_time_series <- xts::xts( x = s_p_daily_tr$close /100000, order.by = s_p_daily_tr$date)
+sp_time_series <- xts::xts( x = metrics$s_p_price / 100000, order.by = metrics$date)
+sp_log_time_series <- xts::xts( x = metrics$log_return / 35  + .0034, order.by = metrics$date)
+s_p_daily_tr_time_series <- xts::xts( x = s_p_daily_tr$Close / 110000, order.by = s_p_daily_tr$Date)
+s_p_log_time_series_tr <- xts::xts( x = s_p_daily_tr_log$log_returns / 35, order.by = s_p_daily_tr_log$Date)
 
 ##creates df used in pe weight slider
 slider_df <- tibble(
@@ -74,6 +76,3 @@ s_p_first_day_of_month <- s_p_daily %>%
   ) %>%
   pull('close')
   
-
-
-
