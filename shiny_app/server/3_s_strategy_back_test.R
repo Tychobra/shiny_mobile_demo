@@ -7,12 +7,22 @@ s_p_monthly_investment_table <- s_p_daily_tr %>%
   select(date = Date, tr_close = Close) %>%
   mutate(end_dollar_value = most_recent_tr / tr_close * 100)
 
+
+
 ##encorperating passed "nick metric" values into table and removed "NA" rows(first two rows)
 investment_with_nick_metrics <- s_p_monthly_investment_table %>%
     left_join(metrics, by = "date") %>%
     select(c("date","tr_close", "end_dollar_value", "pe", "shiller","t_bill_3m", "t_bill_6m", "t_bill_1", "t_bill_2", "t_bill_3", "t_bill_5", "t_bill_7", "t_bill_10", "t_bill_20" , "t_bill_30")) %>%
-    filter(!is.na(pe))  %>%
-    mutate( nick_metric = ( 0.2 * (1 / pe) + 0.8 * ( 1 / shiller) )  * sqrt(egr_geo_mean) * egr_geo_mean / (1 + t_bill_10/100) )
+    filter(!is.na(pe)) %>%
+    mutate( nick_metric = ( .2 * (1 / pe) + ( 1 - .2 ) * ( 1 / shiller) )  * sqrt(egr_geo_mean) * egr_geo_mean / (1 + t_bill_10/100) )
+
+##making table with reactive for pe weights
+# investment_with_nick_metrics <- reactive({
+#   pe_weight_sel <- sel_pe_weight()
+#   
+#   investment_with_nick_metrics %>%
+#     mutate( nick_metric = ( pe_weight_sel * (1 / pe) + ( 1 - pe_weight_sel ) * ( 1 / shiller) )  * sqrt(egr_geo_mean) * egr_geo_mean / (1 + t_bill_10/100) )
+# })
 
 ##finding ending value of investment strategy of $100 per month beginning 1-Feb-1990
 investment_end_value_100_per_month <- round(sum(investment_with_nick_metrics$end_dollar_value), 2)
