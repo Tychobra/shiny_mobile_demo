@@ -51,4 +51,6 @@ function(input, output, session) {
   
   source('server/3_s_strategy_back_test.R', local = TRUE)
   
+  source('server/4_s_saved_params.R', local = TRUE)
+  
 }

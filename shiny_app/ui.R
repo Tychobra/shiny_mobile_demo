@@ -33,6 +33,11 @@ sidebar <- dashboardSidebar(
       width = "100%",
       selected = "10 year"
     ),
+    menuItem(
+      "Saved Params",
+      tabName = "saved_params",
+      icon = icon("balance-scale")
+    ),
     tags$div(
       style = "position: absolute; bottom: 0;",
       a(
@@ -55,12 +60,15 @@ body <- dashboardBody(
       href="https://res.cloudinary.com/dxqnb8xjb/image/upload/v1499450435/logo-blue_hnvtgb.png"
     )
   ),
+  shinytoastr::useToastr(),
   tabItems(
     source('ui/1_ui_dashboard.R', local = TRUE)$value,
     
     source('ui/2_ui_details_of_analysis.R', local = TRUE)$value,
     
-    source('ui/3_ui_strategy_back_test.R', local = TRUE)$value
+    source('ui/3_ui_strategy_back_test.R', local = TRUE)$value,
+    
+    source('ui/4_ui_saved_params.R', local = TRUE)$value
     
   )
 )

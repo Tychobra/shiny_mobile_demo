@@ -5,6 +5,8 @@ library(shinydashboard)
 library(tychobratools) # remotes::install_github("tychobra/tychobratools")
 library(shinyWidgets)
 library(lubridate)
+library(RSQLite)
+library(DBI)
 
 tychobratools::hc_global_options()
 
@@ -18,6 +20,12 @@ s_p_daily_tr_log <- readRDS('data/s_p_daily_tr_log.RDS')
 seegr_data <- read.csv(
   "data/egr_data.csv",
   stringsAsFactors = FALSE
+)
+
+##creates connection to database in Shiny app
+conn <- DBI::dbConnect(
+  RSQLite::SQLite(),
+  'database/db.sqlite3'
 )
 
 avg_shiller_100 <- mean(metrics$shiller)
