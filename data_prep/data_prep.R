@@ -77,6 +77,11 @@ saveRDS(
   metrics,
   "shiny_app/data/metrics.RDS"
 )
+##load egr data
+egr_data <- read.csv(
+  "shiny_app/data/egr_data.csv",
+  stringsAsFactors = FALSE
+)
 ##create geo mean func
 geo_mean = function(x, na_rm = TRUE){
   exp(sum(log(x[x > 0]), na.rm = na_rm) / length(x))

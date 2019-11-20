@@ -17,6 +17,7 @@ output$saved_params_table <- renderDT({
   )
 })
 
+##creates list of currently selected params
 params_prep <- eventReactive(input$save_params, {
   
   out <- list(
@@ -33,6 +34,7 @@ params_prep <- eventReactive(input$save_params, {
   out
 })
 
+##connects list to database and saves the current selection to database
 observeEvent(params_prep(), {
   
   dat <- params_prep()
@@ -49,7 +51,7 @@ observeEvent(params_prep(), {
         dat$discount
       )
     )
-    
+    ##renders message to be shown in ui that indicates to user that pe and discount selections have been stored in database
     db_trigger(db_trigger() + 1)
     tychobratools::show_toast('success', 'params successfully added to db')
   }, error = function(err) {
