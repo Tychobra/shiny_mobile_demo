@@ -14,9 +14,7 @@ f7Page(
       f7Tab(
         tabName = 'Graph',
         active = TRUE,
-        # hist(
-        #   rnorm(100)
-        # )
+        highchartOutput('histogram')
       ),
       f7Tab(
         tabName = "Back-test"
