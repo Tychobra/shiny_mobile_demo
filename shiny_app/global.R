@@ -7,6 +7,7 @@ library(shinyWidgets)
 library(lubridate)
 library(RSQLite)
 library(DBI)
+library(shinyMobile)
 
 tychobratools::hc_global_options()
 
@@ -16,17 +17,6 @@ t_bill_geo_means <- readRDS('data/t_bill_geo_means.RDS')
 egr_geo_mean <- readRDS('data/egr_geo_mean.RDS')
 s_p_daily_tr <- readRDS('data/s_p_daily_tr.RDS')
 s_p_daily_tr_log <- readRDS('data/s_p_daily_tr_log.RDS')
-
-seegr_data <- read.csv(
-  "data/egr_data.csv",
-  stringsAsFactors = FALSE
-)
-
-##creates connection to database in Shiny app
-conn <- DBI::dbConnect(
-  RSQLite::SQLite(),
-  'database/db.sqlite3'
-)
 
 avg_shiller_100 <- mean(metrics$shiller)
 avg_pe_100 <- mean(metrics$pe)
