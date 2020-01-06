@@ -3,7 +3,12 @@ f7Page(
   f7TabLayout(
     panels = f7Panel(
       side = 'left',
-      theme = "light"),
+      theme = "light",
+      f7PanelMenu(
+        'menu',
+        f7PanelItem(tabName = "tab_main", title = "Home", active = TRUE),
+        f7PanelItem(tabName = "tab_details", title = "Details")
+      )),
     navbar = f7Navbar(
       title = 'Valuation',
       left_panel = TRUE
