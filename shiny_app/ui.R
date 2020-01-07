@@ -43,12 +43,22 @@ f7Page(
               'not_buy_point',
               label = 'Cutoff',
               min = 0,
-              max = 10,
-              step = 0.2,
+              max = 7,
+              step = 0.1,
               value = 2
             ), 'Balance starts at $0 with a monthly $100 income stream available to invest.
              You can select a minimum Nick Metric(NM) cutoff under which your monthly income
              is saved until the NM exceeds the cutoff'
+          ),
+          f7Tooltip(
+            f7Slider(
+              'pe_weight_backtest',
+              label = 'PE Weight',
+              min = 0,
+              max = 100,
+              step = 1,
+              value = 20
+            ), 'To Calculate the NM, a weighted PE / Shiller PE is used.  Select the desired weight here'
           ),
           f7Block(
             valueBoxOutput(
@@ -63,5 +73,4 @@ f7Page(
     )
   )
 )
-  
-  
+
