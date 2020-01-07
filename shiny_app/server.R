@@ -7,6 +7,10 @@ function(input, output, session) {
     input$pe_pct_weight / 100
   })
   
+  discount_rate <- reactive({
+    input$discount_rate / 100
+  })
+  
   avg_complete_metric <- reactive({
     
     pe_weight_input <- pe_ratio()
@@ -21,7 +25,7 @@ function(input, output, session) {
   current_complete_metric <- reactive({
     
     pe_weight_input <- pe_ratio()
-    most_recent_t_bill_selected <-  1.02 #hard coded for now
+    most_recent_t_bill_selected <-  discount_rate() 
 
     pe_component = ( 1 / (metrics[1, ]$pe ) ) * pe_weight_input
     shiller_component = (1 / (metrics[1, ]$shiller) ) * (1 - pe_weight_input)
@@ -32,7 +36,7 @@ function(input, output, session) {
   complete_metric_over_time <- reactive({
     
     pe_weight_input <- pe_ratio()
-    most_recent_t_bill_selected <-  1.02 #hard coded for now
+    most_recent_t_bill_selected <-  discount_rate()
     
     metrics <- metrics %>%
       select(date, shiller, pe, t_bill_10) %>%

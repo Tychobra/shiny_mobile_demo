@@ -19,12 +19,24 @@ f7Page(
         tabName = 'Graph',
         active = TRUE,
         f7List(
-          f7Slider(
+          f7Float(
+            f7Slider(
             "pe_pct_weight",
-            label = "P/E Weights(%)",
+            label = "P/E Weights (%)",
             min = 0,
             max = 100,
             value = 20
+            )
+          ),
+          f7Float(
+            f7Slider(
+              "discount_rate",
+              label = "Discount Rate (%)",
+              min = 0,
+              max = 10,
+              value = 2,
+              step = 0.5
+            )
           ),
           highchartOutput('histogram')
         )
