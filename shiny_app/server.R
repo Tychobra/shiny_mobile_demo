@@ -127,7 +127,7 @@ function(input, output, session) {
   output$benchmark_end_balance <- renderValueBox( {
     valueBox(
       investment_end_value_100_per_month,
-      subtitle = "Benchmark",
+      subtitle = "Benchmark: Invests $100/month",
       color = "green"
     )
   })
@@ -135,7 +135,7 @@ function(input, output, session) {
   output$end_balance <- renderValueBox( {
     valueBox(
       sum_with_delays(),
-      subtitle = "Your Stategy End Value"
+      subtitle = "Using Cutoff End Balance"
     )
   })
 }

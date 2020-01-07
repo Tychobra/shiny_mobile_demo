@@ -38,25 +38,30 @@ f7Page(
       f7Tab(
         tabName = "Back-test",
         f7List(
-          h2('Benchmark: Buys every month $100 worth'),
-          h4('Uses a 20% PE weight'),
-          f7Slider(
-            'not_buy_point',
-            label = 'Value under which $100 investment is delayed (%)',
-            min = 0,
-            max = 10,
-            step = 0.2,
-            value = 2
+          f7Tooltip(
+            f7Slider(
+              'not_buy_point',
+              label = 'Cutoff',
+              min = 0,
+              max = 10,
+              step = 0.2,
+              value = 2
+            ), 'Your balance starts at $0 with $100 income stream available to invest.
+             You can select a minimum Nick Metric(NM) cutoff under which your monthly income
+             is saved until the NM becomes higher than the cutoff'
           ),
-          valueBoxOutput(
-            'benchmark_end_balance'
-          ),
-          valueBoxOutput(
-            'end_balance'
+          f7Block(
+            valueBoxOutput(
+              'benchmark_end_balance'
+            ),
+            valueBoxOutput(
+              'end_balance'
+            )
           )
         )
       )
     )
   )
 )
-
+  
+  
