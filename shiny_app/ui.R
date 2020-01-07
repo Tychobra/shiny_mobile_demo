@@ -31,6 +31,7 @@ f7Page(
             label = "Treasury used as Discount Rate",
             choices = discount_slider_df$t_bill_duration
           ),
+          br(),
           highchartOutput('histogram')
         )
       ),
