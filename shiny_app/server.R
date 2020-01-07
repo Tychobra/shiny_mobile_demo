@@ -88,28 +88,44 @@ function(input, output, session) {
   
   
   ##encorperating passed "nick metric" values into table and removed "NA" rows(first two rows)
-  investment_with_nick_metrics <- s_p_monthly_investment_table %>%
+  investment_with_nick_metrics <- reactive({
+    # req(input$pe_weight_backtest)
+    pe_ratio <- input$pe_weight_backtest / 100
+    
+    out <- s_p_monthly_investment_table %>%
     left_join(metrics, by = "date") %>%
     select(c("date","tr_close", "end_dollar_value", "pe", "shiller","t_bill_3m", "t_bill_6m", "t_bill_1", "t_bill_2", "t_bill_3", "t_bill_5", "t_bill_7", "t_bill_10", "t_bill_20" , "t_bill_30")) %>%
     filter(!is.na(pe)) %>%
-    mutate( nick_metric = ( .2 * (1 / pe) + ( 1 - .2 ) * ( 1 / shiller) )  * 1 / (1 + t_bill_10/100) )
+    mutate( nick_metric = ( pe_ratio * (1 / pe) + ( 1 - pe_ratio ) * ( 1 / shiller) )  * 1 / (1 + t_bill_10/100) )
+    
+    out
+  })
+  
+  observe({
+    req(investment_with_nick_metrics())
+  })
   
   ##finding ending value of investment strategy of $100 per month beginning 1-Feb-1990
-  investment_end_value_100_per_month <- round(sum(investment_with_nick_metrics$end_dollar_value), 2)
+  investment_end_value_100_per_month <- reactive({
+    round(sum(investment_with_nick_metrics()$end_dollar_value), 2)
+    
+  })
+    
   
   
   ## making purchase decision react to slider(hold off buying until metric is high enough again)
   sum_with_delays <- reactive({
     
+    
     buy_point <- input$not_buy_point / 100
     cash_to_deploy <- 0
-    n_rows <- nrow(investment_with_nick_metrics)
+    n_rows <- nrow(investment_with_nick_metrics())
     return_value <- numeric(n_rows)
     
     for (i in seq_len(n_rows)) {
       
       cash_to_deploy <- cash_to_deploy + 1
-      the_row <- investment_with_nick_metrics[i, ]
+      the_row <- investment_with_nick_metrics()[i, ]
       
       if (the_row$nick_metric > buy_point) {
         
@@ -126,7 +142,7 @@ function(input, output, session) {
   ##Box output renders
   output$benchmark_end_balance <- renderValueBox( {
     valueBox(
-      investment_end_value_100_per_month,
+      investment_end_value_100_per_month(),
       subtitle = "Benchmark: Invests $100/month",
       color = "green"
     )
