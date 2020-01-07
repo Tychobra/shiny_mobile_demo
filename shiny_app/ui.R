@@ -19,30 +19,35 @@ f7Page(
         tabName = 'Graph',
         active = TRUE,
         f7List(
-          f7Float(
-            f7Slider(
+          f7Slider(
             "pe_pct_weight",
             label = "P/E Weights (%)",
             min = 0,
             max = 100,
             value = 20
-            )
           ),
-          f7Float(
-            f7Slider(
-              "discount_rate",
-              label = "Discount Rate (%)",
-              min = 0,
-              max = 10,
-              value = 2,
-              step = 0.5
-            )
+          f7Picker(
+            "t_bill_duration",
+            label = "Treasury used as Discount Rate",
+            choices = discount_slider_df$t_bill_duration
           ),
           highchartOutput('histogram')
         )
       ),
       f7Tab(
-        tabName = "Back-test"
+        tabName = "Back-test",
+        f7List(
+          h2('Benchmark: Buys every month $100 worth'),
+          h4('Uses a 20% PE weight'),
+          f7Slider(
+            'not_buy_point',
+            label = 'Value under which $100 investment is delayed (%)',
+            min = 0,
+            max = 10,
+            step = 1,
+            value = 2
+          )
+        )
       )
     )
   )

@@ -1,20 +1,29 @@
 function(input, output, session) {
   
-  # pe_ratio <- .2
-  sel_t_bill_geo <- 1.05
+# Chart Page ---------------------------------------------------
   
   pe_ratio <- reactive({
     input$pe_pct_weight / 100
   })
   
+  ##reactive to current interest rate of a selected t-bill duration
   discount_rate <- reactive({
-    input$discount_rate / 100
+    discount_slider_df %>%
+    filter(t_bill_duration == input$t_bill_duration) %>%
+    pull(value_current_discount[1])
+  })
+  
+  ##reactive to grab geometric mean of a selected t-bill duration
+  discount_geo_mean <- reactive({
+    discount_slider_df %>%
+      filter(t_bill_duration == input$t_bill_duration) %>%
+      pull(value_geo_discount[1])
   })
   
   avg_complete_metric <- reactive({
     
     pe_weight_input <- pe_ratio()
-    t_duration_geo_selected <- sel_t_bill_geo
+    t_duration_geo_selected <- discount_geo_mean()
     
     pe_component = (1 / avg_pe_100) * pe_weight_input 
     shiller_component = (1 / avg_shiller_100) * (1 - pe_weight_input)
@@ -67,3 +76,52 @@ function(input, output, session) {
     
   })
 }
+
+# Back-test Page ---------------------------------------
+
+# most_recent_tr <- s_p_daily_tr[nrow(s_p_daily_tr),]$Close
+# 
+# ##creating table to be used in simulation
+# s_p_monthly_investment_table <- s_p_daily_tr %>%
+#   select(date = Date, tr_close = Close) %>%
+#   mutate(end_dollar_value = most_recent_tr / tr_close * 100)
+# 
+# 
+# 
+# ##encorperating passed "nick metric" values into table and removed "NA" rows(first two rows)
+# investment_with_nick_metrics <- s_p_monthly_investment_table %>%
+#   left_join(metrics, by = "date") %>%
+#   select(c("date","tr_close", "end_dollar_value", "pe", "shiller","t_bill_3m", "t_bill_6m", "t_bill_1", "t_bill_2", "t_bill_3", "t_bill_5", "t_bill_7", "t_bill_10", "t_bill_20" , "t_bill_30")) %>%
+#   filter(!is.na(pe)) %>%
+#   mutate( nick_metric = ( .2 * (1 / pe) + ( 1 - .2 ) * ( 1 / shiller) )  * 1 / (1 + t_bill_10/100) )
+# 
+# ##finding ending value of investment strategy of $100 per month beginning 1-Feb-1990
+# investment_end_value_100_per_month <- round(sum(investment_with_nick_metrics$end_dollar_value), 2)
+# 
+# 
+# ## making purchase decision react to slider(hold off buying until metric is high enough again)
+# sum_with_delays <- reactive({
+# 
+#   buy_point <- input$not_buy_point
+#   cash_to_deploy <- 0
+#   n_rows <- nrow(investment_with_nick_metrics)
+#   return_value <- numeric(n_rows)
+# 
+#   for (i in seq_len(n_rows)) {
+# 
+#     cash_to_deploy <- cash_to_deploy + 1
+#     the_row <- investment_with_nick_metrics[i, ]
+# 
+#     if (the_row$nick_metric > buy_point) {
+# 
+#       return_value[i] <- the_row$end_dollar_value * cash_to_deploy
+#       cash_to_deploy <- 0
+# 
+#     }
+#   }
+# 
+#   round(sum(return_value) + cash_to_deploy*100, 2 )
+# 
+# })
+
+  
