@@ -22,6 +22,12 @@ avg_pe_100 <- mean(metrics$pe)
 
 s_p_log_time_series_tr <- xts::xts( x = s_p_daily_tr_log$log_returns / 35, order.by = s_p_daily_tr_log$Date)
 
+## grab current discount rates
+current_treasury_rates <- metrics %>%
+  filter(date == max(date)) %>%
+  select(t_bill_3m:t_bill_30) %>%
+  unlist(use.names = FALSE)
+
 ##creates df used in discount slider  
 discount_slider_df <- tibble(
   t_bill_duration = c(
@@ -34,12 +40,6 @@ discount_slider_df <- tibble(
   value_current_discount = current_treasury_rates / 100 + 1,
   value_geo_discount = t_bill_geo_means$geo_mean
 )
-
-## grab current discount rates
-current_treasury_rates <- metrics %>%
-  filter(date == max(date)) %>%
-  select(t_bill_3m:t_bill_30) %>%
-  unlist(use.names = FALSE)
 
 ##pulling the most recent s&p close for adjustment to pe ratios
 s_p_latest <- s_p_daily %>%
@@ -58,3 +58,4 @@ s_p_first_day_of_month <- s_p_daily %>%
   ) %>%
   pull('close')
   
+# shinyMobile::preview_mobile(appPath = '/shiny_app', device = "iphoneX")
