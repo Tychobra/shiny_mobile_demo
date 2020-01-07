@@ -135,7 +135,7 @@ function(input, output, session) {
   output$end_balance <- renderValueBox( {
     valueBox(
       sum_with_delays(),
-      subtitle = "Using Cutoff End Balance"
+      subtitle = "Postpones $100 Investment Under Cutoff"
     )
   })
 }

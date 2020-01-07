@@ -46,9 +46,9 @@ f7Page(
               max = 10,
               step = 0.2,
               value = 2
-            ), 'Your balance starts at $0 with $100 income stream available to invest.
+            ), 'Balance starts at $0 with a monthly $100 income stream available to invest.
              You can select a minimum Nick Metric(NM) cutoff under which your monthly income
-             is saved until the NM becomes higher than the cutoff'
+             is saved until the NM exceeds the cutoff'
           ),
           f7Block(
             valueBoxOutput(
