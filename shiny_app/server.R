@@ -1,11 +1,15 @@
 function(input, output, session) {
   
-  pe_ratio <- .2
+  # pe_ratio <- .2
   sel_t_bill_geo <- 1.05
+  
+  pe_ratio <- reactive({
+    input$pe_pct_weight / 100
+  })
   
   avg_complete_metric <- reactive({
     
-    pe_weight_input <- pe_ratio
+    pe_weight_input <- pe_ratio()
     t_duration_geo_selected <- sel_t_bill_geo
     
     pe_component = (1 / avg_pe_100) * pe_weight_input 
@@ -16,7 +20,7 @@ function(input, output, session) {
   
   current_complete_metric <- reactive({
     
-    pe_weight_input <- pe_ratio
+    pe_weight_input <- pe_ratio()
     most_recent_t_bill_selected <-  1.02 #hard coded for now
 
     pe_component = ( 1 / (metrics[1, ]$pe ) ) * pe_weight_input
@@ -27,7 +31,7 @@ function(input, output, session) {
   
   complete_metric_over_time <- reactive({
     
-    pe_weight_input <- pe_ratio
+    pe_weight_input <- pe_ratio()
     most_recent_t_bill_selected <-  1.02 #hard coded for now
     
     metrics <- metrics %>%

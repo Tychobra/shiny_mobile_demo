@@ -23,15 +23,15 @@ avg_pe_100 <- mean(metrics$pe)
 s_p_log_time_series_tr <- xts::xts( x = s_p_daily_tr_log$log_returns / 35, order.by = s_p_daily_tr_log$Date)
 
 ##creates df used in pe weight slider
-slider_df <- tibble(
-  pct_label = c(
-    "All Shiller","10%",
-    "20%", "30%", "40%",
-    "50%","60%","70%",
-    "80%","90%","All P/E"
-  ),
-  value = seq(0,1,by = .1)
-)
+# slider_df <- tibble(
+#   pct_label = c(
+#     "All Shiller","10%",
+#     "20%", "30%", "40%",
+#     "50%","60%","70%",
+#     "80%","90%","All P/E"
+#   ),
+#   value = seq(0,1,by = .1)
+# )
 
 ## grab current discount rates
 current_treasury_rates <- metrics %>%
@@ -40,18 +40,18 @@ current_treasury_rates <- metrics %>%
   unlist(use.names = FALSE)
 
 ##creates df used in discount slider  
-discount_slider_df <- tibble(
-  discount_rate = c(
-     "3 month", "6 month",
-     "1 year", "2 year",
-     "3 year", "5 year",
-     "7 year","10 year", 
-     "20 year", "30 year"
-  ),
-  value_current_discount = current_treasury_rates,
-  value_geo_discount = t_bill_geo_means$geo_mean
-  
-)
+# discount_slider_df <- tibble(
+#   discount_rate = c(
+#      "3 month", "6 month",
+#      "1 year", "2 year",
+#      "3 year", "5 year",
+#      "7 year","10 year", 
+#      "20 year", "30 year"
+#   ),
+#   value_current_discount = current_treasury_rates,
+#   value_geo_discount = t_bill_geo_means$geo_mean
+#   
+# )
 
 ##pulling the most recent s&p close for adjustment to pe ratios
 s_p_latest <- s_p_daily %>%

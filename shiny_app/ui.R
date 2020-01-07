@@ -5,7 +5,6 @@ f7Page(
       side = 'left',
       theme = "light",
       f7PanelMenu(
-        'menu',
         f7PanelItem(tabName = "tab_main", title = "Home", active = TRUE),
         f7PanelItem(tabName = "tab_details", title = "Details")
       )),
@@ -19,7 +18,16 @@ f7Page(
       f7Tab(
         tabName = 'Graph',
         active = TRUE,
-        highchartOutput('histogram')
+        f7List(
+          f7Slider(
+            "pe_pct_weight",
+            label = "P/E Weights(%)",
+            min = 0,
+            max = 100,
+            value = 20
+          ),
+          highchartOutput('histogram')
+        )
       ),
       f7Tab(
         tabName = "Back-test"
@@ -27,3 +35,4 @@ f7Page(
     )
   )
 )
+
