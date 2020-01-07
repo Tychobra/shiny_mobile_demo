@@ -50,6 +50,8 @@ f7Page(
              You can select a minimum Nick Metric(NM) cutoff under which your monthly income
              is saved until the NM exceeds the cutoff'
           ),
+          br(),
+          br(),
           f7Tooltip(
             f7Slider(
               'pe_weight_backtest',
@@ -60,6 +62,7 @@ f7Page(
               value = 20
             ), 'To Calculate the NM, a weighted PE / Shiller PE is used.  Select the desired weight here'
           ),
+          br(),
           f7Block(
             valueBoxOutput(
               'benchmark_end_balance'
