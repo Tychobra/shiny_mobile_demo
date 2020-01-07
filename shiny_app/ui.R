@@ -45,8 +45,14 @@ f7Page(
             label = 'Value under which $100 investment is delayed (%)',
             min = 0,
             max = 10,
-            step = 1,
+            step = 0.2,
             value = 2
+          ),
+          valueBoxOutput(
+            'benchmark_end_balance'
+          ),
+          valueBoxOutput(
+            'end_balance'
           )
         )
       )
