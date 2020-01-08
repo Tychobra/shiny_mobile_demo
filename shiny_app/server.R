@@ -90,7 +90,7 @@ function(input, output, session) {
   ##encorperating passed "nick metric" values into table and removed "NA" rows(first two rows)
   investment_with_nick_metrics <- reactive({
     # req(input$pe_weight_backtest)
-    pe_ratio <- input$pe_weight_backtest / 100
+    pe_ratio <- input$pe_pct_weight / 100
     
     out <- s_p_monthly_investment_table %>%
     left_join(metrics, by = "date") %>%
@@ -143,15 +143,14 @@ function(input, output, session) {
   output$benchmark_end_balance <- renderValueBox( {
     valueBox(
       investment_end_value_100_per_month(),
-      subtitle = "Benchmark: Invests $100/month",
-      color = "green"
+      subtitle = 'Ending Balance: $'
     )
   })
   
   output$end_balance <- renderValueBox( {
     valueBox(
       sum_with_delays(),
-      subtitle = "Postpones $100 Investment When Under Cutoff"
+      subtitle = 'Ending Balance: $'
     )
   })
   
