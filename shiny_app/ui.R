@@ -4,8 +4,8 @@ f7Page(
     panels = f7Panel(
       side = 'left',
       theme = "light",
+      effect = 'cover',
       f7PanelMenu(
-        f7PanelItem(tabName = "_main", title = "Home", active = TRUE),
         f7Slider(
           "pe_pct_weight",
           label = "P/E Weights (%)",
