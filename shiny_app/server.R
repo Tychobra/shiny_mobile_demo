@@ -1,6 +1,6 @@
 function(input, output, session) {
   
-  # Chart Page ---------------------------------------------------
+  # Chart Tab ---------------------------------------------------
   
   pe_ratio <- reactive({
     input$pe_pct_weight / 100
@@ -76,7 +76,7 @@ function(input, output, session) {
     
   })
   
-  # Back-test Page ---------------------------------------
+  # Back-test Tab ---------------------------------------
   
   most_recent_tr <- s_p_daily_tr[nrow(s_p_daily_tr),]$Close
   
@@ -151,9 +151,11 @@ function(input, output, session) {
   output$end_balance <- renderValueBox( {
     valueBox(
       sum_with_delays(),
-      subtitle = "Postpones $100 Investment Under Cutoff"
+      subtitle = "Postpones $100 Investment When Under Cutoff"
     )
   })
+  
+  # Details of analyisis ------------------------------------------------------------
 }
 
 
