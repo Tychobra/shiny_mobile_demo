@@ -61,9 +61,9 @@ function(input, output, session) {
     xts::xts(x = metrics$nick_metric, order.by = metrics$date)
   })
   
-  output$histogram <- renderHighchart({
+  output$return_graph <- renderHighchart({
     plot_data <- complete_metric_over_time()
-    
+
     highchart() %>%
       hc_add_series(
         name = "total log return",
@@ -72,8 +72,11 @@ function(input, output, session) {
       hc_add_series(
         name = "Nick's metric",
         data = plot_data
+      ) %>%
+      hc_xAxis(
+        title = "Year",
+        type = "datetime"
       )
-    
   })
   
   # Back-test Tab ---------------------------------------

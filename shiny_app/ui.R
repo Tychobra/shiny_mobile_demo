@@ -26,13 +26,22 @@ f7Page(
         tabName = 'Graph',
         active = TRUE,
         f7List(
-          f7Picker(
-            "t_bill_duration",
-            label = "Treasury used as Discount Rate",
-            choices = discount_slider_df$t_bill_duration
-          ),
-          br(),
-          highchartOutput('histogram')
+          f7Row(
+            column(
+              width = 4,
+              offset = 8,
+                f7Picker(
+                  "t_bill_duration",
+                  label = "Treasury used as Discount Rate",
+                  choices = discount_slider_df$t_bill_duration
+                )
+            ),
+            br(),
+            column(
+              width = 12,
+              highchartOutput('return_graph')
+            )
+          )
         )
       ),
 # UI Back-test tab --------------------------------------------
@@ -42,14 +51,13 @@ f7Page(
           f7Tooltip(
             f7Slider(
               'not_buy_point',
-              label = 'Cutoff',
+              label = "Not by Point",
               min = 0,
               max = 7,
               step = 0.1,
               value = 2
             ), 'Balance starts at $0 with a monthly $100 income stream available to invest.
-             You can select a minimum Nick Metric(NM) cutoff under which your monthly income
-             is saved until the NM exceeds the cutoff'
+             Select a Nick Metric value under which you will not invest the income stream.'
           ),
           br(),
           br(),
@@ -58,7 +66,7 @@ f7Page(
             valueBoxOutput(
               'benchmark_end_balance'
             ),
-            f7BlockHeader(text = 'Posponed Investment When Nick Metric is below Cutoff'),
+            f7BlockHeader(text = 'Posponed Investment When Nick Metric is below Not by Point'),
             valueBoxOutput(
               'end_balance'
             )
