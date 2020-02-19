@@ -63,20 +63,34 @@ function(input, output, session) {
   
   output$return_graph <- renderHighchart({
     plot_data <- complete_metric_over_time()
-
+    s_p_dat <- s_p_log_time_series_tr
+      
     highchart() %>%
       hc_add_series(
-        name = "total log return",
-        data = s_p_log_time_series_tr
+        name = "Total Log Return(S&P)",
+        data = s_p_log_time_series_tr * 100,
+        type = "line",
+        tooltip = list(
+          valueDecimals = 2
+        )
       ) %>%
       hc_add_series(
-        name = "Nick's metric",
-        data = plot_data
+        name = "Nick's Metric",
+        data = plot_data * 100,
+        type = "line",
+        tooltip = list(
+          valueDecimals = 2,
+          valueSuffix = "%"
+        )
       ) %>%
       hc_xAxis(
         title = "Year",
         type = "datetime"
-      )
+      ) %>%
+      hc_yAxis(
+        tickInterval = 1,
+        min = 0
+      ) 
   })
   
   # Back-test Tab ---------------------------------------
@@ -150,12 +164,22 @@ function(input, output, session) {
     )
   })
   
+  # output$benchmark_end_balance <- renderText( {
+  #   investment_end_value_100_per_month()
+  # })
+  
+  
   output$end_balance <- renderValueBox( {
     valueBox(
       sum_with_delays(),
       subtitle = 'Ending Balance: $'
     )
   })
+  
+  # output$end_balance <- renderText( {
+  #     sum_with_delays()
+  # })
+  
   
   # Details of analyisis ------------------------------------------------------------
 }

@@ -51,7 +51,7 @@ f7Page(
           f7Tooltip(
             f7Slider(
               'not_buy_point',
-              label = "Not by Point",
+              label = "Not Buy Point",
               min = 0,
               max = 7,
               step = 0.1,
@@ -62,11 +62,12 @@ f7Page(
           br(),
           br(),
           f7Block(
-            f7BlockHeader(text = '$100/month Investment'),
+            strong = TRUE,
+          f7BlockHeader(text = '$100/month Investment'),
             valueBoxOutput(
               'benchmark_end_balance'
             ),
-            f7BlockHeader(text = 'Posponed Investment When Nick Metric is below Not by Point'),
+            f7BlockHeader(text = 'Posponed Investment When Nick Metric is below Not Buy Point'),
             valueBoxOutput(
               'end_balance'
             )
