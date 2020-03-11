@@ -167,11 +167,8 @@ output$current_metric <- renderText( {
   })
   
   ##Box output renders
-  output$benchmark_end_balance <- renderValueBox( {
-    valueBox(
-      investment_end_value_100_per_month(),
-      subtitle = 'Ending Balance: $'
-    )
+  output$benchmark_end_balance <- renderText( {
+      investment_end_value_100_per_month()
   })
   
   # output$benchmark_end_balance <- renderText( {
@@ -179,11 +176,8 @@ output$current_metric <- renderText( {
   # })
   
   
-  output$end_balance <- renderValueBox( {
-    valueBox(
-      sum_with_delays(),
-      subtitle = 'Ending Balance: $'
-    )
+  output$end_balance <- renderText( {
+      sum_with_delays()
   })
   
   # output$end_balance <- renderText( {

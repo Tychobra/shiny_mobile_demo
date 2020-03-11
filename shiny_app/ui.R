@@ -27,24 +27,18 @@ f7Page(
         active = TRUE,
         f7List(
           f7Row(
-            column(
-              width = 4,
-              offset = 8,
-                f7Picker(
-                  "t_bill_duration",
-                  label = "Treasury used as Discount Rate",
-                  choices = discount_slider_df$t_bill_duration
-                )
+            f7Picker(
+              "t_bill_duration",
+              label = "Treasury used as Discount Rate",
+              choices = discount_slider_df$t_bill_duration,
+              value = "10 year"
             ),
-            br(),
-            column(
-              width = 12,
-              highchartOutput('return_graph')
-            ),
-            column(
-              width = 4,
-              offset = 4,
-              textOutput('current_metric')
+            highchartOutput('return_graph'),
+            f7Align(
+              box(
+                h3(textOutput('current_metric'))
+              ),
+              side = "center"
             )
           )
         )
@@ -65,16 +59,22 @@ f7Page(
              Select a Nick Metric value under which you will not invest the income stream.'
           ),
           br(),
-          br(),
-          f7Block(
-            strong = TRUE,
-          f7BlockHeader(text = '$100/month Investment'),
-            valueBoxOutput(
-              'benchmark_end_balance'
-            ),
-            f7BlockHeader(text = 'Posponed Investment When Nick Metric is below Not Buy Point'),
-            valueBoxOutput(
-              'end_balance'
+          f7Align(
+            side = "center",
+            f7Block(
+              strong = TRUE,
+              inset = TRUE,
+              f7BlockHeader("Ending Balance($100 invested monthly no matter what)"),
+                h1(textOutput('benchmark_end_balance'))
+            )
+          ),
+          f7Align(
+            side = "center",
+            f7Block(
+              strong = TRUE,
+              inset = TRUE,
+              f7BlockHeader("Ending Balance($100 investment posponed under Not Buy Point)"),
+              h1(textOutput('end_balance'))
             )
           )
         )
