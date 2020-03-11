@@ -43,12 +43,7 @@ function(input, output, session) {
   })
   
 output$current_metric <- renderText( {
-  current <- paste0(
-    "Current Nick Metric : ",
-    round(100 * current_complete_metric()[1], digits = 2),
-    "%"
-    )
-  
+  current <- paste(round(100 * current_complete_metric()[1], digits = 2), "%")
   current
 })
   
@@ -77,8 +72,9 @@ output$current_metric <- renderText( {
     
     mean_metric <- mean(complete_metric_over_time()) * 100
     
-    show_avg <- input$show_avg
-      
+    q1_metric <- unname(quantile(complete_metric_over_time(), probs = 0.25) * 100)
+    q3_metric <- unname(quantile(complete_metric_over_time(), probs = 0.75) * 100)
+    
     out <-  highchart() %>%
       hc_add_series(
         name = "Total Log Return(S&P)",
@@ -100,24 +96,100 @@ output$current_metric <- renderText( {
       hc_xAxis(
         title = "Year",
         type = "datetime"
-      ) 
-    
-    if(show_avg == TRUE) {
-      
-      out %>% hc_yAxis(
+      ) %>%
+      hc_yAxis(
         tickInterval = 1,
-        min = 0,
-        plotLines = list(list(
-          value = mean_metric,
-          color = "red",
-          label = list(text = paste("Mean", ":", round(mean_metric, 2), "%"))
-        ))
+        min = 0
       )
-      
-    } else {
-      out
+  
+    plot_lines_mean <- list(
+      value = mean_metric,
+      color = "red",
+      label = list(text = paste("Mean", ":", round(mean_metric, 2), "%"))
+    )
+    
+    plot_lines_q1 <- list(
+      value = q1_metric,
+      color = "blue",
+      label = list(text = paste("Q1", ":", round(q1_metric, 2), "%"))
+    )
+    
+    plot_lines_q3 <- list(
+      value = q3_metric,
+      color = "blue",
+      label = list(text = paste("Q3", ":", round(q3_metric, 2), "%"))
+    )
+    
+    if(input$show_avg == TRUE & input$show_q1 == FALSE & input$show_q3 == FALSE) {
+      out <- out %>% 
+        hc_yAxis(
+          plotLines = list(
+            plot_lines_mean
+          )
+        )
     }
     
+    if(input$show_avg == TRUE & input$show_q1 == TRUE & input$show_q3 == FALSE) {
+      out <- out %>% 
+        hc_yAxis(
+          plotLines = list(
+            plot_lines_mean,
+            plot_lines_q1
+          )
+        )
+    }
+    
+    if(input$show_avg == TRUE & input$show_q1 == TRUE & input$show_q3 == TRUE) {
+      out <- out %>% 
+        hc_yAxis(
+          plotLines = list(
+            plot_lines_mean,
+            plot_lines_q1,
+            plot_lines_q3
+          )
+        )
+    }
+    
+    if(input$show_avg == TRUE & input$show_q1 == FALSE & input$show_q3 == TRUE) {
+      out <- out %>% 
+        hc_yAxis(
+          plotLines = list(
+            plot_lines_mean,
+            plot_lines_q3
+          )
+        )
+    }
+    
+    if(input$show_avg == FALSE & input$show_q1 == TRUE & input$show_q3 == TRUE) {
+      out <- out %>% 
+        hc_yAxis(
+          plotLines = list(
+            plot_lines_q1,
+            plot_lines_q3
+          )
+        )
+    }
+    
+    if(input$show_avg == FALSE & input$show_q1 == FALSE & input$show_q3 == TRUE) {
+      out <- out %>% 
+        hc_yAxis(
+          plotLines = list(
+            plot_lines_q3
+          )
+        )
+    }
+    
+    if(input$show_avg == FALSE & input$show_q1 == TRUE & input$show_q3 == FALSE) {
+      out <- out %>% 
+        hc_yAxis(
+          plotLines = list(
+            plot_lines_q1
+          )
+        )
+    }
+    
+    
+    out
   })
   
   # Back-test Tab ---------------------------------------

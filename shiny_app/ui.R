@@ -44,18 +44,30 @@ f7Page(
               value = "10 year"
             ),
             highchartOutput('return_graph'),
-            f7Float(
-              side = "right",
-              f7checkBox(
-                'show_avg',
-                label = "Show Mean"
-              )
-            ),
             f7Align(
               box(
-                h3(textOutput('current_metric'))
+                status = "primary",
+                h3(textOutput('current_metric')),
+                title = "Current"
               ),
               side = "center"
+            ),
+            f7Float(
+              side = "right",
+              f7List(
+                f7checkBox(
+                  'show_avg',
+                  label = "Show Mean"
+                ),
+                f7checkBox(
+                  'show_q1',
+                  label = "Show Q1"
+                ),
+                f7checkBox(
+                  'show_q3',
+                  label = "Show Q3"
+                )
+              )
             )
           )
         )
