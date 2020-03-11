@@ -105,31 +105,5 @@ saveRDS(
   "shiny_app/data/t_bill_geo_means.RDS"
 )
 
-#I am having to grab the ratios at month start and use that to find earnings.
-#Current S&P prices are grabbed from Yahoo finance
-current_s_p_price <- getQuote('^GSPC') %>%
-  select(Last) %>%
-  pull()
 
-
-pe_start_of_month <- metrics %>%
-  select(pe, shiller) 
-
-pe_start_of_month <- pe_start_of_month[1, ]
-
-earnings_as_of_month_start <- pe_start_of_month %>%
-  mutate(
-    earnings = s_p_first_day_of_month / pe,
-    shiller_earnings = s_p_first_day_of_month / shiller
-  )
-
-current_pe_ratios <- earnings_as_of_month_start %>%
-  select(earnings, shiller_earnings) %>%
-  mutate(
-    pe_current = current_s_p_price / earnings,
-    pe_shiller_current = current_s_p_price / shiller_earnings
-  ) %>%
-  select(pe_current, pe_shiller_current)
-
-saveRDS(current_pe_ratios, "shiny_app/data/current_pe_ratios.RDS")
 
