@@ -110,7 +110,7 @@ output$current_metric <- renderText( {
         plotLines = list(list(
           value = mean_metric,
           color = "red",
-          label = list(text = paste("Average", ":", round(mean_metric, 2), "%"))
+          label = list(text = paste("Mean", ":", round(mean_metric, 2), "%"))
         ))
       )
       
