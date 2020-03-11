@@ -74,8 +74,12 @@ output$current_metric <- renderText( {
   output$return_graph <- renderHighchart({
     plot_data <- complete_metric_over_time()
     s_p_dat <- s_p_log_time_series_tr
+    
+    mean_metric <- mean(complete_metric_over_time()) * 100
+    
+    show_avg <- input$show_avg
       
-    highchart() %>%
+    out <-  highchart() %>%
       hc_add_series(
         name = "Total Log Return(S&P)",
         data = s_p_log_time_series_tr * 100,
@@ -96,11 +100,24 @@ output$current_metric <- renderText( {
       hc_xAxis(
         title = "Year",
         type = "datetime"
-      ) %>%
-      hc_yAxis(
-        tickInterval = 1,
-        min = 0
       ) 
+    
+    if(show_avg == TRUE) {
+      
+      out %>% hc_yAxis(
+        tickInterval = 1,
+        min = 0,
+        plotLines = list(list(
+          value = mean_metric,
+          color = "red",
+          label = list(text = "Average")
+        ))
+      )
+      
+    } else {
+      out
+    }
+    
   })
   
   # Back-test Tab ---------------------------------------

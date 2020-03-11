@@ -6,13 +6,23 @@ f7Page(
       theme = "light",
       effect = 'cover',
       f7PanelMenu(
-        f7Slider(
-          "pe_pct_weight",
-          label = "P/E Weights (%)",
-          min = 0,
-          max = 100,
-          value = 20
-        )
+          f7Slider(
+            "pe_pct_weight",
+            label = "P/E Weights (%)",
+            min = 0,
+            max = 100,
+            value = 20
+          ),
+          br(),
+          f7Block(
+            f7BlockHeader(
+              "What is P/E weight?"
+            ),
+            em(
+              "P/E weight allows you select how much contribution the current P/E and shiller P/E have.
+              For example, a selected weight of 0.2 means that the current P/E is weighted 20% and the shiller PE is weighted 80%"
+            )
+          )
       )),
     navbar = f7Navbar(
       title = 'Valuation',
@@ -34,6 +44,13 @@ f7Page(
               value = "10 year"
             ),
             highchartOutput('return_graph'),
+            f7Float(
+              side = "right",
+              f7checkBox(
+                'show_avg',
+                label = "Show Mean"
+              )
+            ),
             f7Align(
               box(
                 h3(textOutput('current_metric'))
