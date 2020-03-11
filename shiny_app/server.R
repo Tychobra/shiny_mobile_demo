@@ -32,15 +32,25 @@ function(input, output, session) {
   })
   
   current_complete_metric <- reactive({
-    
+
     pe_weight_input <- pe_ratio()
     most_recent_t_bill_selected <-  discount_rate() 
     
-    pe_component = ( 1 / (metrics[1, ]$pe ) ) * pe_weight_input
-    shiller_component = (1 / (metrics[1, ]$shiller) ) * (1 - pe_weight_input)
+    pe_component = ( 1 / (current_pe_ratios$pe_current ) ) * pe_weight_input
+    shiller_component = (1 / (current_pe_ratios$pe_shiller_current) ) * (1 - pe_weight_input)
     nick_metric = (shiller_component + pe_component ) * ( 1 / most_recent_t_bill_selected )
     
   })
+  
+output$current_metric <- renderText( {
+  current <- paste0(
+    "Current Nick Metric : ",
+    round(100 * current_complete_metric()[1], digits = 2),
+    "%"
+    )
+  
+  current
+})
   
   complete_metric_over_time <- reactive({
     

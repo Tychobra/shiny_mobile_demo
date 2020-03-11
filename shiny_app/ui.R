@@ -40,6 +40,11 @@ f7Page(
             column(
               width = 12,
               highchartOutput('return_graph')
+            ),
+            column(
+              width = 4,
+              offset = 4,
+              textOutput('current_metric')
             )
           )
         )

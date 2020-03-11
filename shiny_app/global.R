@@ -16,6 +16,7 @@ s_p_daily <- readRDS('data/s_p_daily.RDS')
 t_bill_geo_means <- readRDS('data/t_bill_geo_means.RDS')
 s_p_daily_tr <- readRDS('data/s_p_daily_tr.RDS')
 s_p_daily_tr_log <- readRDS('data/s_p_daily_tr_log.RDS')
+current_pe_ratios <- readRDS('data/current_pe_ratios.RDS')
 
 avg_shiller_100 <- mean(metrics$shiller)
 avg_pe_100 <- mean(metrics$pe)
