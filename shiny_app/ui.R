@@ -6,7 +6,11 @@ f7Page(
         inputId = "panel",
         side = 'left',
         theme = "dark",
-        effect = 'cover'
+        effect = 'cover',
+          f7PanelItem(
+            "this is a panel selection",
+            tabName = "hello_tab"
+          )
         )
       ),
       navbar = f7Navbar(
