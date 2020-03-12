@@ -7,37 +7,6 @@ f7Page(
         side = 'left',
         theme = "dark",
         effect = 'cover'
-        # f7PanelMenu(
-        #   id = "panel_menu",
-        #   f7PanelItem(
-        #     tabName = 'tab_in_sidebar_test',
-        #     h3("I am a tab")
-        #     # f7Slider(
-        #     #   "pe_pct_weight",
-        #     #   label = "P/E Weights (%)",
-        #     #   min = 0,
-        #     #   max = 100,
-        #     #   value = 20
-        #     # )
-        #   )
-        # )
-          # f7Slider(
-          #   "pe_pct_weight",
-          #   label = "P/E Weights (%)",
-          #   min = 0,
-          #   max = 100,
-          #   value = 20
-          # ),
-          # br(),
-          # f7Block(
-          #   f7BlockHeader(
-          #     "What is P/E weight?"
-          #   ),
-          #   em(
-          #     "P/E weight allows you select how much contribution the current P/E and shiller P/E have.
-          #     For example, a selected weight of 0.2 means that the current P/E is weighted 20% and the shiller PE is weighted 80%"
-          #   )
-          # )
         )
       ),
       navbar = f7Navbar(
