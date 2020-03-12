@@ -126,6 +126,23 @@ f7Page(
             )
           )
         )
+      ),
+      f7Tab(
+        tabName = "List Tab",
+        f7List(
+          f7ListGroup(
+            f7ListItem(
+              'ListItem 1'
+            ),
+            f7ListItem(
+              'ListItem 2'
+            ),
+            f7ListItem(
+              'ListItem 3'
+            ),
+            title = "List Title",
+          )
+        )
       )
     )
   )

@@ -260,18 +260,10 @@ output$current_metric <- renderText( {
       investment_end_value_100_per_month()
   })
   
-  # output$benchmark_end_balance <- renderText( {
-  #   investment_end_value_100_per_month()
-  # })
-  
   
   output$end_balance <- renderText( {
       sum_with_delays()
   })
-  
-  # output$end_balance <- renderText( {
-  #     sum_with_delays()
-  # })
   
   
   # Details of analyisis ------------------------------------------------------------
