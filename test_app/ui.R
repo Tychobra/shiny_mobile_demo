@@ -19,7 +19,10 @@ f7Page(
       f7Tab(
         tabName = "Tab 1",
         active = TRUE,
-        h3("This is the content on Tab 1")
+        # h3("This is the content on Tab 1")
+        test_module_ui(
+          'test'
+        )
       ),
       f7Tab(
         tabName = "Tab 2",

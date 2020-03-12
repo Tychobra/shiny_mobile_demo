@@ -25,6 +25,9 @@ f7Page(
         f7Tab(
           tabName = 'graph',
           active = TRUE,
+          # chart_module_ui(
+          #   "chart"
+          # )
           f7List(
             f7Row(
               f7Slider(
@@ -73,6 +76,16 @@ f7Page(
         f7Tab(
           tabName = "back_test",
           f7List(
+            # f7Tooltip(
+            #   f7Slider(
+            #     "pe_pct_weight",
+            #     label = "P/E Weights (%)",
+            #     min = 0,
+            #     max = 100,
+            #     value = 20
+            #   ),
+            #   "This is the slider"
+            # ),
             f7Tooltip(
               f7Slider(
                 'not_buy_point',
