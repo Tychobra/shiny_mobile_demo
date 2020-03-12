@@ -2,10 +2,12 @@ f7Page(
   title = "S&P Valuation",
   f7TabLayout(
     panels = f7Panel(
+      inputId = "panel",
       side = 'left',
       theme = "light",
       effect = 'cover',
       f7PanelMenu(
+        id = "panel_menu",
         f7PanelItem(
           tabName = 'tab_in_sidebar_test',
           h3("I am a tab")
@@ -45,8 +47,7 @@ f7Page(
       animated = TRUE,
       id = 'tabs',
       f7Tab(
-        tabName = 'Graph',
-        active = TRUE,
+        tabName = 'graph',
         f7List(
           f7Row(
             f7Slider(
@@ -76,15 +77,15 @@ f7Page(
               f7List(
                 f7checkBox(
                   'show_avg',
-                  label = "Show Mean"
+                  label = "Show Metric Mean"
                 ),
                 f7checkBox(
                   'show_q1',
-                  label = "Show Q1"
+                  label = "Show Metric 25th Percentile"
                 ),
                 f7checkBox(
                   'show_q3',
-                  label = "Show Q3"
+                  label = "Show Metric 75th Percentile"
                 )
               )
             )
@@ -93,7 +94,7 @@ f7Page(
       ),
 # UI Back-test tab --------------------------------------------
       f7Tab(
-        tabName = "Back-test",
+        tabName = "back_test",
         f7List(
           f7Tooltip(
             f7Slider(
@@ -128,7 +129,7 @@ f7Page(
         )
       ),
       f7Tab(
-        tabName = "List Tab",
+        tabName = "list_tab",
         f7List(
           f7ListGroup(
             f7ListItem(

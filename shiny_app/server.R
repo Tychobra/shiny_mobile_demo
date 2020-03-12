@@ -7,11 +7,13 @@ function(input, output, session) {
   })
   
   ##reactive to current interest rate of a selected t-bill duration
-  discount_rate <- reactive({
+  discount_rate_ <- reactive({
     discount_slider_df %>%
       filter(t_bill_duration == input$t_bill_duration) %>%
       pull(value_current_discount[1])
   })
+  
+  discount_rate <- discount_rate_ %>% debounce(1000)
   
   ##reactive to grab geometric mean of a selected t-bill duration
   discount_geo_mean <- reactive({
@@ -21,14 +23,14 @@ function(input, output, session) {
   })
   
   avg_complete_metric <- reactive({
-    
+
     pe_weight_input <- pe_ratio()
     t_duration_geo_selected <- discount_geo_mean()
-    
-    pe_component = (1 / avg_pe_100) * pe_weight_input 
+
+    pe_component = (1 / avg_pe_100) * pe_weight_input
     shiller_component = (1 / avg_shiller_100) * (1 - pe_weight_input)
     nick_metric = ( shiller_component + pe_component ) * ( 1 / t_duration_geo_selected )
-    
+
   })
   
   current_complete_metric <- reactive({
@@ -111,13 +113,13 @@ output$current_metric <- renderText( {
     plot_lines_q1 <- list(
       value = q1_metric,
       color = "blue",
-      label = list(text = paste("Q1", ":", round(q1_metric, 2), "%"))
+      label = list(text = paste("25th Percentile", ":", round(q1_metric, 2), "%"))
     )
     
     plot_lines_q3 <- list(
       value = q3_metric,
       color = "blue",
-      label = list(text = paste("Q3", ":", round(q3_metric, 2), "%"))
+      label = list(text = paste("75th Percentile", ":", round(q3_metric, 2), "%"))
     )
     
     if(input$show_avg == TRUE & input$show_q1 == FALSE & input$show_q3 == FALSE) {
@@ -203,7 +205,7 @@ output$current_metric <- renderText( {
   
   
   
-  ##encorperating passed "nick metric" values into table and removed "NA" rows(first two rows)
+  ##incorporating passed "nick metric" values into table and removed "NA" rows(first two rows)
   investment_with_nick_metrics <- reactive({
     # req(input$pe_weight_backtest)
     pe_ratio <- input$pe_pct_weight / 100
