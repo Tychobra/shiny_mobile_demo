@@ -99,31 +99,62 @@ output$current_metric <- renderText( {
           valueSuffix = "%"
         )
       ) %>%
+      hc_colors(
+        colors = c("#026AA7", "#8BBdd9")
+      ) %>%
       hc_xAxis(
         title = "Year",
-        type = "datetime"
+        type = "datetime",
+        labels = list(
+          style = list(
+            color = "#FFFFFF"
+          )
+        )
       ) %>%
       hc_yAxis(
         tickInterval = 1,
-        min = 0
+        min = 0,
+        gridLineColor = "#666666",
+        labels = list(
+          format = "{value}%",
+          style = list(
+            color = "#FFFFFF"
+          )
+        )
       )
 
     plot_lines_mean <- list(
       value = mean_metric,
       color = "red",
-      label = list(text = paste("Mean", ":", round(mean_metric, 2), "%"))
+      label = list(
+        text = paste("Mean", ":", round(mean_metric, 2), "%"),
+        style = list(
+          color ="#FFFFFF"
+        )
+      )
     )
 
     plot_lines_q1 <- list(
       value = q1_metric,
       color = "blue",
-      label = list(text = paste("25th Percentile", ":", round(q1_metric, 2), "%"))
+      label = list(
+        text = paste(
+          "25th Percentile", ":", round(q1_metric, 2), "%"),
+          style = list(
+            color ="#FFFFFF"
+            )
+        )
     )
 
     plot_lines_q3 <- list(
       value = q3_metric,
       color = "blue",
-      label = list(text = paste("75th Percentile", ":", round(q3_metric, 2), "%"))
+      label = list(
+        text = paste("75th Percentile", ":", round(q3_metric, 2), "%"),
+        style = list(
+          color ="#FFFFFF"
+        )
+      )
     )
 
     if(input$show_avg == TRUE & input$show_q1 == FALSE & input$show_q3 == FALSE) {

@@ -1,11 +1,14 @@
 f7Page(
   title = "S&P Valuation",
+  init = f7Init(
+    skin = "auto",
+    theme = "dark"
+  ),
   f7TabLayout(
     panels = tagList(
       f7Panel(
         inputId = "panel",
         side = 'left',
-        theme = "dark",
         effect = 'cover',
           f7PanelItem(
             "this is a panel selection",
@@ -76,16 +79,6 @@ f7Page(
         f7Tab(
           tabName = "back_test",
           f7List(
-            # f7Tooltip(
-            #   f7Slider(
-            #     "pe_pct_weight",
-            #     label = "P/E Weights (%)",
-            #     min = 0,
-            #     max = 100,
-            #     value = 20
-            #   ),
-            #   "This is the slider"
-            # ),
             f7Tooltip(
               f7Slider(
                 'not_buy_point',
