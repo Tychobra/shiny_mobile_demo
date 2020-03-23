@@ -51,8 +51,6 @@ chart_module <- function(input, output, session, pe_ratio) {
   discount_rate <- reactive({
     req(input$t_bill_duration)
     
-    # browser()
-    
     discount_slider_df %>%
       filter(t_bill_duration == input$t_bill_duration) %>%
       pull(value_current_discount[1]) #%>% 
@@ -65,8 +63,6 @@ chart_module <- function(input, output, session, pe_ratio) {
   discount_geo_mean <- reactive({
     req(input$t_bill_duration)
     
-    # browser()
-    
     discount_slider_df %>%
       filter(t_bill_duration == input$t_bill_duration) %>%
       pull(value_geo_discount[1])
@@ -74,8 +70,6 @@ chart_module <- function(input, output, session, pe_ratio) {
   
   avg_complete_metric <- reactive({
     req(discount_geo_mean())
-    
-    # browser()
     
     pe_weight_input <- pe_ratio()
     t_duration_geo_selected <- discount_geo_mean()
@@ -87,8 +81,6 @@ chart_module <- function(input, output, session, pe_ratio) {
   
   current_complete_metric <- reactive({
     req( discount_rate())
-    
-    # browser()
     
     pe_weight_input <- pe_ratio()
     most_recent_t_bill_selected <-  discount_rate() 
@@ -103,8 +95,6 @@ chart_module <- function(input, output, session, pe_ratio) {
   output$current_metric <- renderText( {
     req(current_complete_metric())
     
-    # browser()
-    
     current <- paste("Current Nick Metric Value:", round(100 * current_complete_metric()[1], digits = 2), "%")
     current
   })
@@ -112,8 +102,6 @@ chart_module <- function(input, output, session, pe_ratio) {
   complete_metric_over_time <- reactive({
 
     req( discount_rate())
-    
-    # browser()
     
     pe_weight_input <- pe_ratio()
     most_recent_t_bill_selected <-  discount_rate()
@@ -134,8 +122,6 @@ chart_module <- function(input, output, session, pe_ratio) {
   
   output$return_graph <- renderHighchart({
     req(complete_metric_over_time())
-    
-    # browser()
     
     out <- complete_metric_over_time()
     s_p_dat <- s_p_log_time_series_tr
@@ -174,15 +160,12 @@ chart_module <- function(input, output, session, pe_ratio) {
         min = 0
       )
     
-    # browser()
-    
     plot_lines_mean <- list(
       value = mean_metric,
       color = "red",
       label = list(text = paste("Mean", ":", round(mean_metric, 2), "%"))
     )
     
-    # browser()
     
     plot_lines_q1 <- list(
       value = q1_metric,
@@ -204,8 +187,6 @@ chart_module <- function(input, output, session, pe_ratio) {
           )
         )
     }
-    
-    # browser()
     
     if(input$show_avg == TRUE & input$show_q1 == TRUE & input$show_q3 == FALSE) {
       out <- out %>% 
