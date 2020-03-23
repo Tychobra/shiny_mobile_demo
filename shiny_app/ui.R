@@ -29,7 +29,7 @@ f7Page(
         animated = TRUE,
         id = 'tabs',
         f7Tab(
-          tabName = 'graph',
+          tabName = icon('chart-line'),
           active = TRUE,
           f7Slider(
             "pe_pct_weight",
@@ -46,7 +46,7 @@ f7Page(
 # UI Back-test tab --------------------------------------------
 
         f7Tab(
-          tabName = "Back Test",
+          tabName = icon("calculator"),
           back_test_module_ui(
             "back_test"
           )
@@ -55,7 +55,7 @@ f7Page(
 # UI List Tab -------------------------------------------------
 
         f7Tab(
-          tabName = "List Tab",
+          tabName = icon("list"),
           list_module_ui(
             "list_module"
           )

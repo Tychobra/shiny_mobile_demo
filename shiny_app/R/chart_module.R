@@ -151,13 +151,17 @@ chart_module <- function(input, output, session, pe_ratio) {
           valueSuffix = "%"
         )
       ) %>%
+      hc_colors(
+        c("#99cfe0","#90EE90")
+      ) %>%
       hc_xAxis(
         title = "Year",
         type = "datetime"
       ) %>%
       hc_yAxis(
         tickInterval = 1,
-        min = 0
+        min = 0,
+        gridLineColor = "#696969"
       )
     
     plot_lines_mean <- list(
@@ -249,4 +253,5 @@ chart_module <- function(input, output, session, pe_ratio) {
     
     out
   })
+  
 }
