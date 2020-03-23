@@ -1,16 +1,17 @@
 
 chart_module_ui <- function(id) {
+  
   ns <-  NS(id)
   
   f7List(
     f7Row(
-      f7Slider(
-        ns("pe_pct_weight"),
-        label = "P/E Weights (%)",
-        min = 0,
-        max = 100,
-        value = 20
-      ),
+      # f7Slider(
+      #   ns("pe_pct_weight"),
+      #   label = "P/E Weights (%)",
+      #   min = 0,
+      #   max = 100,
+      #   value = 20
+      # ),
       f7Picker(
         ns("t_bill_duration"),
         label = "Treasury used as Discount Rate",
@@ -43,15 +44,15 @@ chart_module_ui <- function(id) {
 }
 
 
-chart_module <- function(input, output, session, metrics_) {
+chart_module <- function(input, output, session, metrics_, pe_ratio) {
   
   ns <- session$ns
   
-  pe_ratio <- reactive({
-    req(input$pe_pct_weight)
-    
-    input$pe_pct_weight / 100
-  })
+  # pe_ratio <- reactive({
+  #   req(input$pe_pct_weight)
+  # 
+  #   input$pe_pct_weight / 100
+  # })
   
   ##reactive to current interest rate of a selected t-bill duration
   discount_rate <- reactive({
@@ -79,7 +80,7 @@ chart_module <- function(input, output, session, metrics_) {
   })
   
   avg_complete_metric <- reactive({
-    req(pe_ratio(), discount_geo_mean())
+    req(discount_geo_mean())
     
     # browser()
     
@@ -92,7 +93,7 @@ chart_module <- function(input, output, session, metrics_) {
   })
   
   current_complete_metric <- reactive({
-    req(pe_ratio(), discount_rate())
+    req( discount_rate())
     
     # browser()
     
@@ -117,7 +118,7 @@ chart_module <- function(input, output, session, metrics_) {
   
   complete_metric_over_time <- reactive({
 
-    req(pe_ratio(), discount_rate())
+    req( discount_rate())
     
     # browser()
     

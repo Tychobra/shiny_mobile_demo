@@ -16,10 +16,6 @@ metrics <- readRDS('data/metrics.RDS')
 s_p_daily <- readRDS('data/s_p_daily.RDS')
 t_bill_geo_means <- readRDS('data/t_bill_geo_means.RDS')
 
-##old data prep data
-# s_p_daily_tr <- readRDS('data/s_p_daily_tr.RDS')
-# s_p_daily_tr_log <- readRDS('data/s_p_daily_tr_log.RDS')
-
 
 ##new data prep data
 s_p_tr <- readRDS('data/s_p_tr.RDS')
@@ -30,7 +26,6 @@ avg_shiller_100 <- mean(metrics$shiller)
 avg_pe_100 <- mean(metrics$pe)
 
 s_p_log_time_series_tr <- xts::xts( x = s_p_tr_log$log_returns / 35, order.by = s_p_tr_log$Date)
-# s_p_log_time_series_tr <- xts::xts( x = s_p_daily_tr_log$log_returns / 35, order.by = s_p_daily_tr_log$Date)
 
 ## grab current discount rates
 current_treasury_rates <- metrics %>%
