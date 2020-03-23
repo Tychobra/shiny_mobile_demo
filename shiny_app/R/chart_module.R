@@ -19,11 +19,10 @@ chart_module_ui <- function(id) {
         value = "10 year"
       ),
       highchartOutput(ns('return_graph')),
-      box(
-        status = "primary",
+      f7Padding(
+        side = "left",
         h3(textOutput(ns('current_metric')),
-           title = "Current Value of Nick Metric"),
-        side = "center"
+           title = "Current Value of Nick Metric")
       ),
       f7Float(
         side = "right",
@@ -47,12 +46,6 @@ chart_module_ui <- function(id) {
 chart_module <- function(input, output, session, metrics_, pe_ratio) {
   
   ns <- session$ns
-  
-  # pe_ratio <- reactive({
-  #   req(input$pe_pct_weight)
-  # 
-  #   input$pe_pct_weight / 100
-  # })
   
   ##reactive to current interest rate of a selected t-bill duration
   discount_rate <- reactive({
@@ -112,7 +105,7 @@ chart_module <- function(input, output, session, metrics_, pe_ratio) {
     
     # browser()
     
-    current <- paste(round(100 * current_complete_metric()[1], digits = 2), "%")
+    current <- paste("Current Nick Metric Value:", round(100 * current_complete_metric()[1], digits = 2), "%")
     current
   })
   
