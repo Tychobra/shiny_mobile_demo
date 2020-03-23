@@ -49,19 +49,8 @@ f7Page(
 # UI List Tab -------------------------------------------------
         f7Tab(
           tabName = "list_tab",
-          f7List(
-            f7ListGroup(
-              f7ListItem(
-                'ListItem 1'
-              ),
-              f7ListItem(
-                'ListItem 2'
-              ),
-              f7ListItem(
-                'ListItem 3'
-              ),
-              title = "List Title",
-            )
+          list_module_ui(
+            "list_module"
           )
         )
       )

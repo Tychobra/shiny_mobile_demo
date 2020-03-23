@@ -23,6 +23,11 @@ function(input, output, session) {
     'back_test',
     pe_ratio = pe_ratio
   )
+  
+  callModule(
+    list_module,
+    "list"
+  )
 }
 
 
