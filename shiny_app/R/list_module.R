@@ -6,54 +6,31 @@ list_module_ui <- function(id)  {
   f7List(
     f7ListGroup(
       f7ListItem(
-        'This'
+        media = icon("google"),
+        url = "https://finance.yahoo.com/quote/GOOGL/",
+        right = "Google"
       ),
       f7ListItem(
-        'Is'
+        media = icon("charging-station"),
+        right = 'Tesla',
+        url = "https://finance.yahoo.com/quote/tsla/"
       ),
       f7ListItem(
-        'Where'
+        media = icon("square"),
+        right = 'Square',
+        url = "https://finance.yahoo.com/quote/sq/"
       ),
       f7ListItem(
-        'The'
+        media = icon("apple"),
+        right = 'Apple',
+        url = "https://finance.yahoo.com/quote/appl/"
       ),
       f7ListItem(
-        'List'
+        media = icon("facebook-square"),
+        right = 'Facebook',
+        url = "https://finance.yahoo.com/quote/fb/"
       ),
-      f7ListItem(
-        'Items'
-      ),
-      f7ListItem(
-        'Would'
-      ),
-      f7ListItem(
-        'Go'
-      ),
-      f7ListItem(
-        'Item_1'
-      ),
-      f7ListItem(
-        'Item_2'
-      ),
-      f7ListItem(
-        'Item_3'
-      ),
-      f7ListItem(
-        'Item_4'
-      ),
-      f7ListItem(
-        'Item_5'
-      ),
-      f7ListItem(
-        'Item_6'
-      ),
-      f7ListItem(
-        'Item_7'
-      ),
-      f7ListItem(
-        'Item_8'
-      ),
-      title = "List Title",
+      title = "Highlighted Stocks",
     )
   )
   
