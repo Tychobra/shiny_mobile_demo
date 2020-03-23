@@ -28,52 +28,52 @@ f7Page(
         f7Tab(
           tabName = 'graph',
           active = TRUE,
-          # chart_module_ui(
-          #   "chart"
-          # )
-          f7List(
-            f7Row(
-              f7Slider(
-                "pe_pct_weight",
-                label = "P/E Weights (%)",
-                min = 0,
-                max = 100,
-                value = 20
-              ),
-              f7Picker(
-                "t_bill_duration",
-                label = "Treasury used as Discount Rate",
-                choices = discount_slider_df$t_bill_duration,
-                value = "10 year"
-              ),
-              highchartOutput('return_graph'),
-              f7Align(
-                box(
-                  status = "primary",
-                  h3(textOutput('current_metric')),
-                  title = "Current Value of Nick Metric"
-                ),
-                side = "center"
-              ),
-              f7Float(
-                side = "right",
-                f7List(
-                  f7checkBox(
-                    'show_avg',
-                    label = "Show Metric Mean"
-                  ),
-                  f7checkBox(
-                    'show_q1',
-                    label = "Show Metric 25th Percentile"
-                  ),
-                  f7checkBox(
-                    'show_q3',
-                    label = "Show Metric 75th Percentile"
-                  )
-                )
-              )
-            )
+          chart_module_ui(
+            "chart"
           )
+          # f7List(
+          #   f7Row(
+          #     f7Slider(
+          #       "pe_pct_weight",
+          #       label = "P/E Weights (%)",
+          #       min = 0,
+          #       max = 100,
+          #       value = 20
+          #     ),
+          #     f7Picker(
+          #       "t_bill_duration",
+          #       label = "Treasury used as Discount Rate",
+          #       choices = discount_slider_df$t_bill_duration,
+          #       value = "10 year"
+          #     ),
+          #     highchartOutput('return_graph'),
+          #     f7Align(
+          #       box(
+          #         status = "primary",
+          #         h3(textOutput('current_metric')),
+          #         title = "Current Value of Nick Metric"
+          #       ),
+          #       side = "center"
+          #     ),
+          #     f7Float(
+          #       side = "right",
+          #       f7List(
+          #         f7checkBox(
+          #           'show_avg',
+          #           label = "Show Metric Mean"
+          #         ),
+          #         f7checkBox(
+          #           'show_q1',
+          #           label = "Show Metric 25th Percentile"
+          #         ),
+          #         f7checkBox(
+          #           'show_q3',
+          #           label = "Show Metric 75th Percentile"
+          #         )
+          #       )
+          #     )
+          #   )
+          # )
         ),
 # UI Back-test tab --------------------------------------------
         f7Tab(
