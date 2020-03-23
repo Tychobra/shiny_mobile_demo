@@ -41,10 +41,10 @@ back_test_module_ui <- function(id) {
 
 back_test_module <- function(input, output, session, pe_ratio) {
   
-  most_recent_tr <- s_p_daily_tr[nrow(s_p_daily_tr),]$sp_500_tr
+  most_recent_tr <- s_p_tr[nrow(s_p_tr),]$sp_500_tr
   
   ##creating table to be used in simulation
-  s_p_monthly_investment_table <- s_p_daily_tr %>%
+  s_p_monthly_investment_table <- s_p_tr %>%
     select(date = Date, tr_close = sp_500_tr) %>%
     mutate(end_dollar_value = most_recent_tr / tr_close * 100)
   
