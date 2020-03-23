@@ -41,14 +41,14 @@ f7Page(
         ),
 # UI Back-test tab --------------------------------------------
         f7Tab(
-          tabName = "back_test",
+          tabName = "Back Test",
           back_test_module_ui(
             "back_test"
           )
         ),
 # UI List Tab -------------------------------------------------
         f7Tab(
-          tabName = "list_tab",
+          tabName = "List Tab",
           list_module_ui(
             "list_module"
           )
