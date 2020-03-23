@@ -2,40 +2,41 @@
 back_test_module_ui <- function(id) {
   
   ns <-  NS(id)
-  
-  f7List(
-    f7Tooltip(
-      f7Slider(
-        ns('not_buy_point'),
-        label = "Not Buy Point",
-        min = 0,
-        max = 7,
-        step = 0.1,
-        value = 2
-      ), 'Balance starts at $0 with a monthly $100 income stream available to invest.
+
+    f7List(
+      br(),
+      f7Tooltip(
+        f7Slider(
+          ns('not_buy_point'),
+          label = "Not Buy Point",
+          min = 0,
+          max = 7,
+          step = 0.1,
+          value = 2
+        ), 'Balance starts at $0 with a monthly $100 income stream available to invest.
                Select a Nick Metric value under which you will not invest the income stream.  
                PE weight can be adjusted on Graph tab.'
-    ),
-    br(),
-    f7Align(
-      side = "center",
-      f7Block(
-        strong = TRUE,
-        inset = TRUE,
-        f7BlockHeader("Ending Balance($100 invested monthly no matter what)"),
-        h1(textOutput(ns('benchmark_end_balance')))
-      )
-    ),
-    f7Align(
-      side = "center",
-      f7Block(
-        strong = TRUE,
-        inset = TRUE,
-        f7BlockHeader("Ending Balance($100 investment posponed under Not Buy Point)"),
-        h1(textOutput(ns('end_balance')))
+      ),
+      br(),
+      f7Align(
+        side = "center",
+        f7Block(
+          strong = TRUE,
+          inset = TRUE,
+          f7BlockHeader("Ending Balance($100 invested monthly no matter what)"),
+          h1(textOutput(ns('benchmark_end_balance')))
+        )
+      ),
+      f7Align(
+        side = "center",
+        f7Block(
+          strong = TRUE,
+          inset = TRUE,
+          f7BlockHeader("Ending Balance($100 investment posponed under Not Buy Point)"),
+          h1(textOutput(ns('end_balance')))
+        )
       )
     )
-  )
 }
 
 back_test_module <- function(input, output, session, pe_ratio) {
