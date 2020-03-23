@@ -43,7 +43,7 @@ chart_module_ui <- function(id) {
 }
 
 
-chart_module <- function(input, output, session, metrics_, pe_ratio) {
+chart_module <- function(input, output, session, pe_ratio) {
   
   ns <- session$ns
   
@@ -118,7 +118,7 @@ chart_module <- function(input, output, session, metrics_, pe_ratio) {
     pe_weight_input <- pe_ratio()
     most_recent_t_bill_selected <-  discount_rate()
     
-    metrics_ <- metrics_ %>%
+    metrics <- metrics %>%
       select(date, shiller, pe, t_bill_10) %>%
       mutate(
         pe_component = ( 1 / pe ) * pe_weight_input,

@@ -14,7 +14,6 @@ function(input, output, session) {
   callModule(
     chart_module,
     "chart",
-    metrics_ = metrics,
     pe_ratio = pe_ratio
   )
 
