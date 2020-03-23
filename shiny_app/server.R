@@ -1,6 +1,7 @@
 function(input, output, session) {
 
 # Higher level: Outside Modules --------------------------------
+  
   pe_ratio <- reactive({
     req(input$pe_pct_weight)
     
@@ -9,6 +10,7 @@ function(input, output, session) {
   
 
 #  Chart Tab ---------------------------------------------------
+  
   callModule(
     chart_module,
     "chart",
@@ -16,7 +18,7 @@ function(input, output, session) {
     pe_ratio = pe_ratio
   )
 
-  # Back-test Tab ---------------------------------------
+  # Back-test Tab ----------------------------------------------
   
   callModule(
     back_test_module,
@@ -24,10 +26,13 @@ function(input, output, session) {
     pe_ratio = pe_ratio
   )
   
+  # List Tab ---------------------------------------------------
+  
   callModule(
     list_module,
     "list"
   )
+  
 }
 
 

@@ -1,3 +1,4 @@
+
 f7Page(
   title = "S&P Valuation",
   init = f7Init(
@@ -21,7 +22,9 @@ f7Page(
         left_panel = TRUE,
         right_panel = FALSE
       ),
-# UI Chart tab --------------------------------------------
+    
+# UI Chart tab ------------------------------------------------
+
       f7Tabs(
         animated = TRUE,
         id = 'tabs',
@@ -39,14 +42,18 @@ f7Page(
             "chart"
           )
         ),
+        
 # UI Back-test tab --------------------------------------------
+
         f7Tab(
           tabName = "Back Test",
           back_test_module_ui(
             "back_test"
           )
         ),
+
 # UI List Tab -------------------------------------------------
+
         f7Tab(
           tabName = "List Tab",
           list_module_ui(
