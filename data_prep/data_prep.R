@@ -121,7 +121,7 @@ quantmod::getSymbols.yahoo(
   periodicity = "monthly"
 )
 
-SP500TR <- as.data.frame(SP500TR)
+SP500TR <- as_tibble(SP500TR)
 
 SP500TR <- SP500TR %>%
   select(SP500TR.Close)
@@ -181,7 +181,7 @@ saveRDS(
 #   auto.assign = FALSE
 # )
 # 
-# s_p_daily_tr <- as.data.frame(s_p_daily_tr)
+# s_p_daily_tr <- as_tibble(s_p_daily_tr)
 # s_p_daily_tr <- as_tibble(s_p_daily_tr)
 # 
 # s_p_daily_tr$Date <- as.Date(s_p_daily_tr$Date)

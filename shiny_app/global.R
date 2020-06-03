@@ -9,6 +9,11 @@ library(RSQLite)
 library(DBI)
 library(shinyMobile)
 library(quantmod)
+library(shiny)
+
+source("R/back_test_module.R")
+source("R/chart_module.R")
+source("R/list_module.R")
 
 tychobratools::hc_global_options()
 
