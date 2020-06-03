@@ -2,7 +2,7 @@
 back_test_module_ui <- function(id) {
   
   ns <-  NS(id)
-
+  
     f7List(
       br(),
       f7Tooltip(

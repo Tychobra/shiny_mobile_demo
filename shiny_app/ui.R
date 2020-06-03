@@ -30,7 +30,7 @@ f7Page(
         id = 'tabs',
         f7Tab(
           tabName = "Graph",
-          icon = f7Icon('graph_square', old = FALSE),
+          icon = f7Icon('graph_square'),
           active = TRUE,
           f7Slider(
             "pe_pct_weight",
@@ -48,7 +48,7 @@ f7Page(
 
         f7Tab(
           tabName = "Back Test",
-          icon = f7Icon("clock",  old = FALSE),
+          icon = f7Icon("clock"),
           # icon = icon('calculator'),
           back_test_module_ui(
             "back_test"
@@ -59,7 +59,7 @@ f7Page(
 
         f7Tab(
           tabName = "List",
-          icon = f7Icon("square_list",  old = FALSE),
+          icon = f7Icon("square_list"),
           list_module_ui(
             "list_module"
           )
